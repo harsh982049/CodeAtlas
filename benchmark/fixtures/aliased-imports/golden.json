@@ -1,0 +1,16 @@
+{
+  "schemaVersion":1,"fixture":"aliased-imports",
+  "entities":[
+    {"ref":"payments-file","identity":{"identityKind":"NAMED","filePath":"src/payments.ts","kind":"FILE","qualifiedName":"src/payments.ts"},"name":"payments.ts","exported":false},
+    {"ref":"charge","identity":{"identityKind":"NAMED","filePath":"src/payments.ts","kind":"FUNCTION","qualifiedName":"charge"},"name":"charge","exported":true},
+    {"ref":"checkout-file","identity":{"identityKind":"NAMED","filePath":"src/checkout.ts","kind":"FILE","qualifiedName":"src/checkout.ts"},"name":"checkout.ts","exported":false},
+    {"ref":"checkout","identity":{"identityKind":"NAMED","filePath":"src/checkout.ts","kind":"FUNCTION","qualifiedName":"checkout"},"name":"checkout","exported":true}
+  ],
+  "edges":[
+    {"edgeType":"CONTAINS","sourceRef":"payments-file","targetRef":"charge","confidence":1,"evidence":{"filePath":"src/payments.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":55,"kind":"SYNTAX"}},
+    {"edgeType":"IMPORTS","sourceRef":"checkout-file","targetRef":"payments-file","confidence":1,"evidence":{"filePath":"src/checkout.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":60,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"CONTAINS","sourceRef":"checkout-file","targetRef":"checkout","confidence":1,"evidence":{"filePath":"src/checkout.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":70,"kind":"SYNTAX"}},
+    {"edgeType":"CALLS","sourceRef":"checkout","targetRef":"charge","confidence":1,"evidence":{"filePath":"src/checkout.ts","startLine":2,"startColumn":45,"endLine":2,"endColumn":61,"kind":"STATIC_RESOLUTION"}}
+  ],
+  "unresolvedRelationships":[],"expectedDiagnosticCodes":[]
+}

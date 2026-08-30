@@ -1,0 +1,1 @@
+{"schemaVersion":1,"name":"javascript-commonjs","description":"JavaScript CommonJS require and export patterns.","languages":["JAVASCRIPT"],"behaviors":["CommonJS require","module.exports","exports property"],"intentionallyUnresolvedRelationships":[],"projectFiles":["jsconfig.json"],"sourceFiles":["src/payments.js","src/main.js"],"goldenFile":"golden.json"}

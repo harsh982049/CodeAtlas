@@ -1,0 +1,11 @@
+{
+  "schemaVersion":1,"fixture":"malformed-source",
+  "entities":[
+    {"ref":"valid","identity":{"identityKind":"NAMED","filePath":"src/valid.ts","kind":"FUNCTION","qualifiedName":"valid"},"name":"valid","exported":true}
+  ],
+  "edges":[],
+  "unresolvedRelationships":[
+    {"sourceRef":null,"intendedEdgeType":"CONTAINS","targetText":"broken","reason":"MALFORMED_SOURCE","evidence":{"filePath":"src/broken.ts","startLine":1,"startColumn":1,"endLine":2,"endColumn":16,"kind":"SYNTAX"}}
+  ],
+  "expectedDiagnosticCodes":["TS_PARSE_ERROR"]
+}

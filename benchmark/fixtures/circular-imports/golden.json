@@ -1,0 +1,14 @@
+{
+  "schemaVersion":1,"fixture":"circular-imports",
+  "entities":[
+    {"ref":"a","identity":{"identityKind":"NAMED","filePath":"src/a.ts","kind":"FILE","qualifiedName":"src/a.ts"},"name":"a.ts","exported":false},
+    {"ref":"b","identity":{"identityKind":"NAMED","filePath":"src/b.ts","kind":"FILE","qualifiedName":"src/b.ts"},"name":"b.ts","exported":false},
+    {"ref":"c","identity":{"identityKind":"NAMED","filePath":"src/c.ts","kind":"FILE","qualifiedName":"src/c.ts"},"name":"c.ts","exported":false}
+  ],
+  "edges":[
+    {"edgeType":"IMPORTS","sourceRef":"a","targetRef":"b","confidence":1,"evidence":{"filePath":"src/a.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":28,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"IMPORTS","sourceRef":"b","targetRef":"c","confidence":1,"evidence":{"filePath":"src/b.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":28,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"IMPORTS","sourceRef":"c","targetRef":"a","confidence":1,"evidence":{"filePath":"src/c.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":28,"kind":"STATIC_RESOLUTION"}}
+  ],
+  "unresolvedRelationships":[],"expectedDiagnosticCodes":[]
+}

@@ -1,0 +1,12 @@
+{
+  "schemaVersion":1,"fixture":"dynamic-unresolved",
+  "entities":[
+    {"ref":"load-plugin","identity":{"identityKind":"NAMED","filePath":"src/dynamic.js","kind":"FUNCTION","qualifiedName":"loadPlugin"},"name":"loadPlugin","exported":true}
+  ],
+  "edges":[],
+  "unresolvedRelationships":[
+    {"sourceRef":"load-plugin","intendedEdgeType":"IMPORTS","targetText":"./plugins/${name}.js","reason":"COMPUTED_SPECIFIER","evidence":{"filePath":"src/dynamic.js","startLine":2,"startColumn":24,"endLine":2,"endColumn":55,"kind":"SYNTAX"}},
+    {"sourceRef":"load-plugin","intendedEdgeType":"POSSIBLE_CALL","targetText":"plugin.run","reason":"DYNAMIC_DISPATCH","evidence":{"filePath":"src/dynamic.js","startLine":3,"startColumn":10,"endLine":3,"endColumn":22,"kind":"SYNTAX"}}
+  ],
+  "expectedDiagnosticCodes":[]
+}

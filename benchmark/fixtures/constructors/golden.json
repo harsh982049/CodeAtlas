@@ -1,0 +1,13 @@
+{
+  "schemaVersion":1,"fixture":"constructors",
+  "entities":[
+    {"ref":"service","identity":{"identityKind":"NAMED","filePath":"src/payment-service.ts","kind":"CLASS","qualifiedName":"PaymentService"},"name":"PaymentService","exported":true},
+    {"ref":"constructor","identity":{"identityKind":"NAMED","filePath":"src/payment-service.ts","kind":"CONSTRUCTOR","qualifiedName":"PaymentService.constructor"},"name":"constructor","exported":false},
+    {"ref":"instance","identity":{"identityKind":"NAMED","filePath":"src/main.ts","kind":"VARIABLE","qualifiedName":"service"},"name":"service","exported":true}
+  ],
+  "edges":[
+    {"edgeType":"CONTAINS","sourceRef":"service","targetRef":"constructor","confidence":1,"evidence":{"filePath":"src/payment-service.ts","startLine":2,"startColumn":3,"endLine":2,"endColumn":44,"kind":"SYNTAX"}},
+    {"edgeType":"INSTANTIATES","sourceRef":"instance","targetRef":"service","confidence":1,"evidence":{"filePath":"src/main.ts","startLine":2,"startColumn":24,"endLine":2,"endColumn":49,"kind":"STATIC_RESOLUTION"}}
+  ],
+  "unresolvedRelationships":[],"expectedDiagnosticCodes":[]
+}

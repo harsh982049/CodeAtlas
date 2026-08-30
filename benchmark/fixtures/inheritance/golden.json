@@ -1,0 +1,18 @@
+{
+  "schemaVersion":1,"fixture":"inheritance",
+  "entities":[
+    {"ref":"gateway","identity":{"identityKind":"NAMED","filePath":"src/gateway.ts","kind":"INTERFACE","qualifiedName":"Gateway"},"name":"Gateway","exported":true},
+    {"ref":"base","identity":{"identityKind":"NAMED","filePath":"src/gateway.ts","kind":"CLASS","qualifiedName":"BaseGateway"},"name":"BaseGateway","exported":true},
+    {"ref":"log","identity":{"identityKind":"NAMED","filePath":"src/gateway.ts","kind":"METHOD","qualifiedName":"BaseGateway.log"},"name":"log","exported":false},
+    {"ref":"stripe","identity":{"identityKind":"NAMED","filePath":"src/gateway.ts","kind":"CLASS","qualifiedName":"StripeGateway"},"name":"StripeGateway","exported":true},
+    {"ref":"charge","identity":{"identityKind":"NAMED","filePath":"src/gateway.ts","kind":"METHOD","qualifiedName":"StripeGateway.charge"},"name":"charge","exported":false}
+  ],
+  "edges":[
+    {"edgeType":"CONTAINS","sourceRef":"base","targetRef":"log","confidence":1,"evidence":{"filePath":"src/gateway.ts","startLine":2,"startColumn":28,"endLine":2,"endColumn":52,"kind":"SYNTAX"}},
+    {"edgeType":"EXTENDS","sourceRef":"stripe","targetRef":"base","confidence":1,"evidence":{"filePath":"src/gateway.ts","startLine":3,"startColumn":36,"endLine":3,"endColumn":47,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"IMPLEMENTS","sourceRef":"stripe","targetRef":"gateway","confidence":1,"evidence":{"filePath":"src/gateway.ts","startLine":3,"startColumn":59,"endLine":3,"endColumn":66,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"CONTAINS","sourceRef":"stripe","targetRef":"charge","confidence":1,"evidence":{"filePath":"src/gateway.ts","startLine":4,"startColumn":3,"endLine":4,"endColumn":37,"kind":"SYNTAX"}},
+    {"edgeType":"CALLS","sourceRef":"charge","targetRef":"log","confidence":1,"evidence":{"filePath":"src/gateway.ts","startLine":4,"startColumn":20,"endLine":4,"endColumn":30,"kind":"STATIC_RESOLUTION"}}
+  ],
+  "unresolvedRelationships":[],"expectedDiagnosticCodes":[]
+}

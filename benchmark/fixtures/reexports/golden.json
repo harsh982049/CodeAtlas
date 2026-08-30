@@ -1,0 +1,17 @@
+{
+  "schemaVersion":1,"fixture":"reexports",
+  "entities":[
+    {"ref":"foo-file","identity":{"identityKind":"NAMED","filePath":"src/foo.ts","kind":"FILE","qualifiedName":"src/foo.ts"},"name":"foo.ts","exported":false},
+    {"ref":"foo","identity":{"identityKind":"NAMED","filePath":"src/foo.ts","kind":"FUNCTION","qualifiedName":"foo"},"name":"foo","exported":true},
+    {"ref":"barrel","identity":{"identityKind":"NAMED","filePath":"src/barrel.ts","kind":"FILE","qualifiedName":"src/barrel.ts"},"name":"barrel.ts","exported":false},
+    {"ref":"index","identity":{"identityKind":"NAMED","filePath":"src/index.ts","kind":"FILE","qualifiedName":"src/index.ts"},"name":"index.ts","exported":false}
+  ],
+  "edges":[
+    {"edgeType":"CONTAINS","sourceRef":"foo-file","targetRef":"foo","confidence":1,"evidence":{"filePath":"src/foo.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":44,"kind":"SYNTAX"}},
+    {"edgeType":"IMPORTS","sourceRef":"barrel","targetRef":"foo-file","confidence":1,"evidence":{"filePath":"src/barrel.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":35,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"EXPORTS","sourceRef":"barrel","targetRef":"foo","confidence":1,"evidence":{"filePath":"src/barrel.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":35,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"IMPORTS","sourceRef":"index","targetRef":"barrel","confidence":1,"evidence":{"filePath":"src/index.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":29,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"EXPORTS","sourceRef":"index","targetRef":"foo","confidence":1,"evidence":{"filePath":"src/index.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":29,"kind":"STATIC_RESOLUTION"}}
+  ],
+  "unresolvedRelationships":[],"expectedDiagnosticCodes":[]
+}

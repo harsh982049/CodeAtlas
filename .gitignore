@@ -1,0 +1,57 @@
+# ---------------------------------
+# Dependencies
+# ---------------------------------
+node_modules/
+.pnpm-store/
+
+# ---------------------------------
+# Build / generated output
+# ---------------------------------
+dist/
+build/
+out/
+coverage/
+.nyc_output/
+*.tsbuildinfo
+
+# ---------------------------------
+# Cache / temporary files
+# ---------------------------------
+.cache/
+.tmp/
+tmp/
+.eslintcache
+
+# ---------------------------------
+# Environment / secrets
+# ---------------------------------
+.env
+.env.*
+!.env.example
+
+# ---------------------------------
+# Logs
+# ---------------------------------
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ---------------------------------
+# IDE / editor
+# ---------------------------------
+.idea/
+.vscode/
+
+# ---------------------------------
+# Operating system files
+# ---------------------------------
+.DS_Store
+Thumbs.db
+
+# ---------------------------------
+# Miscellaneous local artifacts
+# ---------------------------------
+*.swp
+*.swo

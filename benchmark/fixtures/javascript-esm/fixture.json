@@ -1,0 +1,1 @@
+{"schemaVersion":1,"name":"javascript-esm","description":"JavaScript ESM import and call resolution.","languages":["JAVASCRIPT"],"behaviors":["JavaScript ESM import","JavaScript call resolution"],"intentionallyUnresolvedRelationships":[],"projectFiles":["jsconfig.json"],"sourceFiles":["src/math.js","src/main.js"],"goldenFile":"golden.json"}

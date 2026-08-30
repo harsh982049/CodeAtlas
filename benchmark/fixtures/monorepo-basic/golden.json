@@ -1,0 +1,15 @@
+{
+  "schemaVersion":1,"fixture":"monorepo-basic",
+  "entities":[
+    {"ref":"shared-file","identity":{"identityKind":"NAMED","filePath":"packages/shared/src/index.ts","kind":"FILE","qualifiedName":"packages/shared/src/index.ts"},"name":"index.ts","exported":false},
+    {"ref":"format-money","identity":{"identityKind":"NAMED","filePath":"packages/shared/src/index.ts","kind":"FUNCTION","qualifiedName":"formatMoney"},"name":"formatMoney","exported":true},
+    {"ref":"web-file","identity":{"identityKind":"NAMED","filePath":"apps/web/src/main.ts","kind":"FILE","qualifiedName":"apps/web/src/main.ts"},"name":"main.ts","exported":false},
+    {"ref":"label","identity":{"identityKind":"NAMED","filePath":"apps/web/src/main.ts","kind":"VARIABLE","qualifiedName":"label"},"name":"label","exported":true}
+  ],
+  "edges":[
+    {"edgeType":"CONTAINS","sourceRef":"shared-file","targetRef":"format-money","confidence":1,"evidence":{"filePath":"packages/shared/src/index.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":81,"kind":"SYNTAX"}},
+    {"edgeType":"IMPORTS","sourceRef":"web-file","targetRef":"shared-file","confidence":1,"evidence":{"filePath":"apps/web/src/main.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":53,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"CALLS","sourceRef":"label","targetRef":"format-money","confidence":1,"evidence":{"filePath":"apps/web/src/main.ts","startLine":2,"startColumn":22,"endLine":2,"endColumn":37,"kind":"STATIC_RESOLUTION"}}
+  ],
+  "unresolvedRelationships":[],"expectedDiagnosticCodes":[]
+}

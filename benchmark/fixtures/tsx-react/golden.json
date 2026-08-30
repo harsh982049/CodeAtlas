@@ -1,0 +1,18 @@
+{
+  "schemaVersion":1,"fixture":"tsx-react",
+  "entities":[
+    {"ref":"button-file","identity":{"identityKind":"NAMED","filePath":"src/Button.tsx","kind":"FILE","qualifiedName":"src/Button.tsx"},"name":"Button.tsx","exported":false},
+    {"ref":"button","identity":{"identityKind":"NAMED","filePath":"src/Button.tsx","kind":"COMPONENT","qualifiedName":"Button"},"name":"Button","exported":true},
+    {"ref":"compact-button","identity":{"identityKind":"NAMED","filePath":"src/Button.tsx","kind":"COMPONENT","qualifiedName":"CompactButton"},"name":"CompactButton","exported":true},
+    {"ref":"app-file","identity":{"identityKind":"NAMED","filePath":"src/App.tsx","kind":"FILE","qualifiedName":"src/App.tsx"},"name":"App.tsx","exported":false},
+    {"ref":"app","identity":{"identityKind":"NAMED","filePath":"src/App.tsx","kind":"COMPONENT","qualifiedName":"App"},"name":"App","exported":true}
+  ],
+  "edges":[
+    {"edgeType":"CONTAINS","sourceRef":"button-file","targetRef":"button","confidence":0.95,"evidence":{"filePath":"src/Button.tsx","startLine":1,"startColumn":1,"endLine":1,"endColumn":59,"kind":"HEURISTIC"}},
+    {"edgeType":"CONTAINS","sourceRef":"button-file","targetRef":"compact-button","confidence":0.9,"evidence":{"filePath":"src/Button.tsx","startLine":2,"startColumn":1,"endLine":2,"endColumn":61,"kind":"HEURISTIC"}},
+    {"edgeType":"IMPORTS","sourceRef":"app-file","targetRef":"button-file","confidence":1,"evidence":{"filePath":"src/App.tsx","startLine":1,"startColumn":1,"endLine":1,"endColumn":38,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"CONTAINS","sourceRef":"app-file","targetRef":"app","confidence":0.95,"evidence":{"filePath":"src/App.tsx","startLine":2,"startColumn":1,"endLine":2,"endColumn":57,"kind":"HEURISTIC"}},
+    {"edgeType":"REFERENCES","sourceRef":"app","targetRef":"button","confidence":1,"evidence":{"filePath":"src/App.tsx","startLine":2,"startColumn":38,"endLine":2,"endColumn":48,"kind":"STATIC_RESOLUTION"}}
+  ],
+  "unresolvedRelationships":[],"expectedDiagnosticCodes":[]
+}

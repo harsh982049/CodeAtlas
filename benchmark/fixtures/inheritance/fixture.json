@@ -1,0 +1,1 @@
+{"schemaVersion":1,"name":"inheritance","description":"Class inheritance and interface implementation directions.","languages":["TYPESCRIPT"],"behaviors":["class extension","interface implementation","inherited method call"],"intentionallyUnresolvedRelationships":[],"projectFiles":["tsconfig.json"],"sourceFiles":["src/gateway.ts"],"goldenFile":"golden.json"}

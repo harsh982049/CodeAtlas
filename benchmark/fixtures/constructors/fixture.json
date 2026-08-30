@@ -1,0 +1,1 @@
+{"schemaVersion":1,"name":"constructors","description":"Constructor declarations and class instantiation.","languages":["TYPESCRIPT"],"behaviors":["constructor identity","class instantiation"],"intentionallyUnresolvedRelationships":[],"projectFiles":["tsconfig.json"],"sourceFiles":["src/payment-service.ts","src/main.ts"],"goldenFile":"golden.json"}

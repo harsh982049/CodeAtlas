@@ -1,0 +1,1 @@
+{"compilerOptions":{"strict":true,"baseUrl":".","paths":{"@fixture/shared":["packages/shared/src/index.ts"]}}}

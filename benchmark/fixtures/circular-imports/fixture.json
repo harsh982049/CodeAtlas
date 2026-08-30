@@ -1,0 +1,1 @@
+{"schemaVersion":1,"name":"circular-imports","description":"A legal module import cycle without graph traversal loops.","languages":["TYPESCRIPT"],"behaviors":["cyclic module imports","cycle-safe traversal"],"intentionallyUnresolvedRelationships":[],"projectFiles":["tsconfig.json"],"sourceFiles":["src/a.ts","src/b.ts","src/c.ts"],"goldenFile":"golden.json"}

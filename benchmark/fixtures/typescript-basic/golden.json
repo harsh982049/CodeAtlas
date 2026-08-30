@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "fixture": "typescript-basic",
+  "entities": [
+    {"ref":"contracts-file","identity":{"identityKind":"NAMED","filePath":"src/contracts.ts","kind":"FILE","qualifiedName":"src/contracts.ts"},"name":"contracts.ts","exported":false},
+    {"ref":"gateway","identity":{"identityKind":"NAMED","filePath":"src/contracts.ts","kind":"INTERFACE","qualifiedName":"Gateway"},"name":"Gateway","exported":true},
+    {"ref":"payment-id","identity":{"identityKind":"NAMED","filePath":"src/contracts.ts","kind":"TYPE_ALIAS","qualifiedName":"PaymentId"},"name":"PaymentId","exported":true},
+    {"ref":"service-file","identity":{"identityKind":"NAMED","filePath":"src/payment-service.ts","kind":"FILE","qualifiedName":"src/payment-service.ts"},"name":"payment-service.ts","exported":false},
+    {"ref":"service","identity":{"identityKind":"NAMED","filePath":"src/payment-service.ts","kind":"CLASS","qualifiedName":"PaymentService"},"name":"PaymentService","exported":true},
+    {"ref":"constructor","identity":{"identityKind":"NAMED","filePath":"src/payment-service.ts","kind":"CONSTRUCTOR","qualifiedName":"PaymentService.constructor"},"name":"constructor","exported":false},
+    {"ref":"create-method","identity":{"identityKind":"NAMED","filePath":"src/payment-service.ts","kind":"METHOD","qualifiedName":"PaymentService.create"},"name":"create","exported":false},
+    {"ref":"create-payment","identity":{"identityKind":"NAMED","filePath":"src/create-payment.ts","kind":"FUNCTION","qualifiedName":"createPayment"},"name":"createPayment","exported":true}
+  ],
+  "edges": [
+    {"edgeType":"CONTAINS","sourceRef":"contracts-file","targetRef":"gateway","confidence":1,"evidence":{"filePath":"src/contracts.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":58,"kind":"SYNTAX"}},
+    {"edgeType":"CONTAINS","sourceRef":"contracts-file","targetRef":"payment-id","confidence":1,"evidence":{"filePath":"src/contracts.ts","startLine":3,"startColumn":1,"endLine":3,"endColumn":32,"kind":"SYNTAX"}},
+    {"edgeType":"IMPORTS","sourceRef":"service-file","targetRef":"contracts-file","confidence":1,"evidence":{"filePath":"src/payment-service.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":62,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"CONTAINS","sourceRef":"service-file","targetRef":"service","confidence":1,"evidence":{"filePath":"src/payment-service.ts","startLine":2,"startColumn":1,"endLine":5,"endColumn":2,"kind":"SYNTAX"}},
+    {"edgeType":"CONTAINS","sourceRef":"service","targetRef":"constructor","confidence":1,"evidence":{"filePath":"src/payment-service.ts","startLine":3,"startColumn":3,"endLine":3,"endColumn":58,"kind":"SYNTAX"}},
+    {"edgeType":"CONTAINS","sourceRef":"service","targetRef":"create-method","confidence":1,"evidence":{"filePath":"src/payment-service.ts","startLine":4,"startColumn":3,"endLine":4,"endColumn":72,"kind":"SYNTAX"}},
+    {"edgeType":"CALLS","sourceRef":"create-payment","targetRef":"create-method","confidence":1,"evidence":{"filePath":"src/create-payment.ts","startLine":3,"startColumn":10,"endLine":3,"endColumn":28,"kind":"STATIC_RESOLUTION"}}
+  ],
+  "unresolvedRelationships": [],
+  "expectedDiagnosticCodes": []
+}
