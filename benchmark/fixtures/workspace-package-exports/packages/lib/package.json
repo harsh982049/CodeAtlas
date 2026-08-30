@@ -1,0 +1,1 @@
+{"name":"@fixture/exports-lib","private":true,"exports":{".":{"types":"./src/index.ts","default":"./dist/index.js"},"./feature":{"types":"./src/feature.ts","default":"./dist/feature.js"}}}

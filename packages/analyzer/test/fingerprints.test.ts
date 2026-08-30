@@ -2,7 +2,7 @@ import ts from "typescript";
 
 import { describe, expect, it } from "vitest";
 
-import { fingerprintsFor } from "../src/fingerprints.js";
+import { fingerprintsFor, fingerprintsForDeclarations } from "../src/fingerprints.js";
 
 function firstClass(text: string): ts.ClassDeclaration {
   const source = ts.createSourceFile("example.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
@@ -29,5 +29,23 @@ describe("analyzer fingerprints", () => {
     expect(fingerprintsFor(compact as ts.Statement, "FUNCTION", true, false)).toEqual(
       fingerprintsFor(formatted as ts.Statement, "FUNCTION", true, false),
     );
+  });
+
+  it("aggregates overload declarations separately from the implementation body", () => {
+    const source = ts.createSourceFile("overloads.ts", [
+      "export function parse(value: string): string;",
+      "export function parse(value: number): number;",
+      "export function parse(value: string | number) { return value; }",
+    ].join("\n"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    const declarations = source.statements.filter(ts.isFunctionDeclaration);
+    const original = fingerprintsForDeclarations(declarations, "FUNCTION", true, false);
+    const changedBodySource = ts.createSourceFile("overloads.ts", [
+      "export function parse(value: string): string;",
+      "export function parse(value: number): number;",
+      "export function parse(value: string | number) { return String(value); }",
+    ].join("\n"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    const changedBody = fingerprintsForDeclarations(changedBodySource.statements.filter(ts.isFunctionDeclaration), "FUNCTION", true, false);
+    expect(changedBody.declaration).toBe(original.declaration);
+    expect(changedBody.implementation).not.toBe(original.implementation);
   });
 });

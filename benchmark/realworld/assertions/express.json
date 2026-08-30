@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "repository": "expressjs/express",
+  "commitSha": "cd7d4397c398a3f3ecadeaf9ef6ac1377bd414c4",
+  "facts": [
+    {
+      "id": "express-entry-file",
+      "kind": "ENTITY",
+      "rationale": "The CommonJS entry source is represented as a file.",
+      "evidence": { "filePath": "lib/express.js", "startLine": 15, "endLine": 15, "contentHash": "4f35e8273a5e78c35e778d14e4a8c80a81ca3e1fc8047dc87d2077b860404572" },
+      "subject": { "filePath": "lib/express.js", "kind": "FILE", "qualifiedName": "lib/express.js" }
+    },
+    {
+      "id": "express-create-application",
+      "kind": "ENTITY",
+      "rationale": "A top-level CommonJS factory declaration is extracted.",
+      "evidence": { "filePath": "lib/express.js", "startLine": 36, "endLine": 36, "contentHash": "4f35e8273a5e78c35e778d14e4a8c80a81ca3e1fc8047dc87d2077b860404572" },
+      "subject": { "filePath": "lib/express.js", "kind": "FUNCTION", "qualifiedName": "createApplication" }
+    },
+    {
+      "id": "express-logerror",
+      "kind": "ENTITY",
+      "rationale": "A non-exported helper near the end of application.js is extracted.",
+      "evidence": { "filePath": "lib/application.js", "startLine": 615, "endLine": 615, "contentHash": "f907fbf24306e0a5ed9d526c7804903d556b51e91c295e6ec65842a8343c9644" },
+      "subject": { "filePath": "lib/application.js", "kind": "FUNCTION", "qualifiedName": "logerror" }
+    },
+    {
+      "id": "express-try-render",
+      "kind": "ENTITY",
+      "rationale": "A second application helper is extracted independently.",
+      "evidence": { "filePath": "lib/application.js", "startLine": 625, "endLine": 625, "contentHash": "f907fbf24306e0a5ed9d526c7804903d556b51e91c295e6ec65842a8343c9644" },
+      "subject": { "filePath": "lib/application.js", "kind": "FUNCTION", "qualifiedName": "tryRender" }
+    },
+    {
+      "id": "express-imports-application",
+      "kind": "EDGE",
+      "rationale": "A relative require resolves to an internal source file.",
+      "evidence": { "filePath": "lib/express.js", "startLine": 18, "endLine": 18, "contentHash": "4f35e8273a5e78c35e778d14e4a8c80a81ca3e1fc8047dc87d2077b860404572" },
+      "edgeType": "IMPORTS",
+      "source": { "filePath": "lib/express.js", "kind": "FILE", "qualifiedName": "lib/express.js" },
+      "target": { "filePath": "lib/application.js", "kind": "FILE", "qualifiedName": "lib/application.js" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "express-imports-request",
+      "kind": "EDGE",
+      "rationale": "The request prototype require resolves internally.",
+      "evidence": { "filePath": "lib/express.js", "startLine": 20, "endLine": 20, "contentHash": "4f35e8273a5e78c35e778d14e4a8c80a81ca3e1fc8047dc87d2077b860404572" },
+      "edgeType": "IMPORTS",
+      "source": { "filePath": "lib/express.js", "kind": "FILE", "qualifiedName": "lib/express.js" },
+      "target": { "filePath": "lib/request.js", "kind": "FILE", "qualifiedName": "lib/request.js" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "express-imports-response",
+      "kind": "EDGE",
+      "rationale": "The response prototype require resolves internally.",
+      "evidence": { "filePath": "lib/express.js", "startLine": 21, "endLine": 21, "contentHash": "4f35e8273a5e78c35e778d14e4a8c80a81ca3e1fc8047dc87d2077b860404572" },
+      "edgeType": "IMPORTS",
+      "source": { "filePath": "lib/express.js", "kind": "FILE", "qualifiedName": "lib/express.js" },
+      "target": { "filePath": "lib/response.js", "kind": "FILE", "qualifiedName": "lib/response.js" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "express-imports-body-parser",
+      "kind": "EDGE",
+      "rationale": "An absent npm dependency remains a first-class external package.",
+      "evidence": { "filePath": "lib/express.js", "startLine": 15, "endLine": 15, "contentHash": "4f35e8273a5e78c35e778d14e4a8c80a81ca3e1fc8047dc87d2077b860404572" },
+      "edgeType": "IMPORTS",
+      "source": { "filePath": "lib/express.js", "kind": "FILE", "qualifiedName": "lib/express.js" },
+      "target": { "filePath": null, "kind": "EXTERNAL_PACKAGE", "qualifiedName": "body-parser" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "express-application-imports-view",
+      "kind": "EDGE",
+      "rationale": "Internal CommonJS resolution also works outside the entry file.",
+      "evidence": { "filePath": "lib/application.js", "startLine": 18, "endLine": 18, "contentHash": "f907fbf24306e0a5ed9d526c7804903d556b51e91c295e6ec65842a8343c9644" },
+      "edgeType": "IMPORTS",
+      "source": { "filePath": "lib/application.js", "kind": "FILE", "qualifiedName": "lib/application.js" },
+      "target": { "filePath": "lib/view.js", "kind": "FILE", "qualifiedName": "lib/view.js" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "express-application-imports-utils",
+      "kind": "EDGE",
+      "rationale": "Repeated property-level requires share the resolved internal file target.",
+      "evidence": { "filePath": "lib/application.js", "startLine": 20, "endLine": 23, "contentHash": "f907fbf24306e0a5ed9d526c7804903d556b51e91c295e6ec65842a8343c9644" },
+      "edgeType": "IMPORTS",
+      "source": { "filePath": "lib/application.js", "kind": "FILE", "qualifiedName": "lib/application.js" },
+      "target": { "filePath": "lib/utils.js", "kind": "FILE", "qualifiedName": "lib/utils.js" },
+      "minimumConfidence": 1
+    }
+  ]
+}

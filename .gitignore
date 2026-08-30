@@ -21,6 +21,7 @@ coverage/
 .tmp/
 tmp/
 .eslintcache
+.codeatlas-cache/
 
 # ---------------------------------
 # Environment / secrets

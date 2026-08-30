@@ -1,10 +1,10 @@
 # Code graph contract
 
-This document describes the executable graph contract established in Milestone 1 and consumed by the Milestone 2 analyzer. It narrows the [V1 specification](./CODEATLAS_V1_SPEC.md) into framework-independent values that analyzers and persistence adapters must obey.
+This document describes the executable graph contract established in Milestone 1 and hardened through the Milestone 3 analyzer. It narrows the [V1 specification](./CODEATLAS_V1_SPEC.md) into framework-independent values that analyzers and persistence adapters must obey.
 
 ## Boundary
 
-`LanguageAnalyzer` accepts a repository root, a source revision, an optional persisted analysis-snapshot identity, project hints, and explicit resource limits. It returns an in-memory graph, statistics, diagnostics, and unresolved relationships. A persisted snapshot may use only an exact Git revision matching its commit SHA. Local/debug analysis may instead use a deterministic content revision and no persisted snapshot identity. Implementations inspect source without executing it. Milestone 2's concrete behavior is documented in [ANALYZER.md](./ANALYZER.md).
+`LanguageAnalyzer` accepts a repository root, a source revision, an optional persisted analysis-snapshot identity, project hints, and explicit file/file-size/traversal/depth/time limits. It returns an in-memory graph, statistics, diagnostics, unresolved relationships, and analysis telemetry. A persisted snapshot may use only an exact Git revision matching its commit SHA. Local/debug analysis may instead use a deterministic content revision and no persisted snapshot identity. Implementations inspect source without executing it. Milestone 3's concrete behavior is documented in [ANALYZER.md](./ANALYZER.md).
 
 All repository paths stored in contracts are normalized, repository-relative, forward-slash paths. Source ranges are half-open: `[start, end)`. Line and column values are both one-based to preserve the Milestone 1 location contract. The start identifies the first included character; the end identifies the first excluded character. TypeScript zero-based line/column positions are therefore converted by adding one to both values.
 
@@ -64,6 +64,8 @@ Diagnostics are separate from unresolved relationships. A syntax error is a diag
 
 ## External package normalization
 
+Milestone 3 statistics additionally expose analyzed bytes and lines, anonymous entities, and detailed resolution counts. Telemetry records ordered phase durations, CPU usage, and peak process RSS. Limit violations are typed analyzer errors and do not depend on parsing human-readable messages.
+
 The normalizer never reads installed package code. It turns `express` into npm package `express`; `lodash/fp` into package `lodash` plus subpath `fp`; and `@scope/package/subpath` into package `@scope/package` plus subpath `subpath`. Only the package root receives an `EXTERNAL_PACKAGE` entity. The requested specifier and subpath remain available for edge metadata, and package version is nullable because dependencies are not installed.
 
 Node built-ins normalize to an explicit `NODE_BUILTIN` ecosystem: `fs`, `node:fs`, and `node:fs/promises` share package entity `node:fs`, with any subpath retained separately. Relative, absolute, import-map, URL-scheme, and malformed specifiers are not classified as npm package roots by this utility.
@@ -73,6 +75,6 @@ Node built-ins normalize to an explicit `NODE_BUILTIN` ecosystem: `fs`, `node:fs
 - `packages/shared`: brands, snapshot identities, normalized paths, source locations, JSON-safe values, and distinct confidence/risk value types.
 - `packages/codegraph`: identities, fingerprints, entities, directed edge semantics, in-memory storage, traversal, validation, and deterministic serialization.
 - `packages/analyzer`: language-neutral contracts plus the in-memory JavaScript/TypeScript Compiler API frontend. Production analyzer code has no dependency on benchmark ground truth.
-- `benchmark`: fixture/golden schemas, safe loaders, graph materialization, analyzer execution, and comparison metrics.
+- `benchmark`: fixture/golden schemas, safe loaders, graph materialization, analyzer execution/comparison metrics, and isolated pinned-repository evaluation.
 
 These contracts are storage-neutral. PostgreSQL snapshot persistence is a later milestone and must adapt to these values rather than adding database concerns to the analyzer.

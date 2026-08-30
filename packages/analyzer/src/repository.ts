@@ -7,11 +7,13 @@ import { normalizeRelativePath } from "@codeatlas/shared";
 
 import type { AnalysisLimits } from "./analyzer-input.js";
 import type { AnalyzerDiagnostic } from "./analyzer-diagnostic.js";
+import { AnalysisLimitError } from "./analysis-error.js";
 
 const ignoredDirectories = new Set([
   ".git", ".hg", ".svn", ".next", ".turbo", "build", "coverage", "dist",
   "node_modules", "out", "target", "vendor",
 ]);
+const ignoredRelativeDirectories = new Set(["tests/baselines"]);
 const sourcePattern = /(?:\.d)?\.(?:[cm]?[jt]sx?)$/iu;
 const projectNames = new Set(["package.json", "pnpm-workspace.yaml", "tsconfig.json", "jsconfig.json"]);
 
@@ -28,18 +30,23 @@ export interface RepositoryScan {
   readonly projectFiles: readonly RepositoryFile[];
   readonly filesDiscovered: number;
   readonly filesSkipped: number;
+  readonly traversalEntries: number;
   readonly diagnostics: readonly AnalyzerDiagnostic[];
 }
 
 export class AnalysisDeadline {
   readonly #expiresAt: number;
+  readonly #now: () => number;
 
-  constructor(timeoutMilliseconds: number) {
-    this.#expiresAt = Date.now() + timeoutMilliseconds;
+  constructor(timeoutMilliseconds: number, now: () => number = Date.now) {
+    this.#now = now;
+    this.#expiresAt = now() + timeoutMilliseconds;
   }
 
   check(stage: string): void {
-    if (Date.now() > this.#expiresAt) throw new Error(`Analysis deadline exceeded during ${stage}`);
+    if (this.#now() > this.#expiresAt) {
+      throw new AnalysisLimitError("DEADLINE", stage, `Analysis deadline exceeded during ${stage}`);
+    }
   }
 }
 
@@ -85,13 +92,26 @@ export async function scanRepository(
   let filesDiscovered = 0;
   let filesSkipped = 0;
   let sourceCandidates = 0;
+  let traversalEntries = 0;
+  let traversalLimitReached = false;
 
-  async function walk(directory: string): Promise<void> {
+  async function walk(directory: string, depth: number): Promise<void> {
     deadline.check("repository discovery");
+    if (depth > limits.maxDirectoryDepth) {
+      const relativeDirectory = path.relative(root, directory).replaceAll("\\", "/") || ".";
+      diagnostics.push(locationless("MAX_DIRECTORY_DEPTH_EXCEEDED", `Skipped ${relativeDirectory}; maxDirectoryDepth is ${limits.maxDirectoryDepth}`));
+      return;
+    }
     const entries = (await readdir(directory, { withFileTypes: true }))
       .sort((left, right) => left.name.localeCompare(right.name));
     for (const entry of entries) {
       deadline.check("repository discovery");
+      traversalEntries += 1;
+      if (traversalEntries > limits.maxTraversalEntries) {
+        diagnostics.push(locationless("MAX_TRAVERSAL_ENTRIES_EXCEEDED", `Stopped discovery; maxTraversalEntries is ${limits.maxTraversalEntries}`));
+        traversalLimitReached = true;
+        break;
+      }
       if (entry.isDirectory() && ignoredDirectories.has(entry.name.toLowerCase())) continue;
       const absolutePath = path.join(directory, entry.name);
       const relativeText = path.relative(root, absolutePath).replaceAll("\\", "/");
@@ -100,7 +120,12 @@ export async function scanRepository(
         continue;
       }
       if (entry.isDirectory()) {
-        await walk(absolutePath);
+        if (ignoredRelativeDirectories.has(relativeText.toLowerCase())) {
+          diagnostics.push(locationless("GENERATED_DIRECTORY_SKIPPED", `Skipped recognized generated-source directory ${relativeText}`));
+          continue;
+        }
+        await walk(absolutePath, depth + 1);
+        if (traversalLimitReached) break;
         continue;
       }
       const sourceCandidate = sourcePattern.test(entry.name);
@@ -140,6 +165,6 @@ export async function scanRepository(
     }
   }
 
-  await walk(root);
-  return { root, sourceFiles, projectFiles, filesDiscovered, filesSkipped, diagnostics };
+  await walk(root, 0);
+  return { root, sourceFiles, projectFiles, filesDiscovered, filesSkipped, traversalEntries, diagnostics };
 }

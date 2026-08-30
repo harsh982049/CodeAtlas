@@ -3,7 +3,10 @@ export interface AnalysisStats {
   readonly filesAnalyzed: number;
   readonly filesSkipped: number;
   readonly filesFailed: number;
+  readonly sourceBytesAnalyzed: number;
+  readonly sourceLinesAnalyzed: number;
   readonly entitiesExtracted: number;
+  readonly anonymousEntitiesExtracted: number;
   readonly edgesCreated: number;
   readonly callsResolved: number;
   readonly callsUnresolved: number;

@@ -3404,7 +3404,7 @@ Implement project discovery, safe compiler configuration, TypeScript `Program`/`
 
 ### Milestone 3 — Code graph hardening
 
-Build generic `code_entities` and `code_edges`, enforce edge domains/directions, resolve structural relationships, attach provenance/evidence/confidence, and implement in-memory direct/reverse/bounded traversal.
+Harden the in-memory code graph before persistence: add project-reference and overlapping-project handling, workspace package-export resolution, logical overload sets, fixed-point re-export propagation, anonymous-entity accounting, typed file/traversal/depth/time limits, phase/resource telemetry, and deterministic graph summaries. Expand the synthetic corpus without changing frozen earlier goldens, then validate evidence-backed structural facts and cold-analysis resource behavior on exact pinned commits of representative real repositories. Real-repository workers enforce hard process timeouts and never install or execute external dependencies.
 
 ### Milestone 4 — PostgreSQL snapshots and persistence
 

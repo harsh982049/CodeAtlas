@@ -1,0 +1,7 @@
+{"schemaVersion":1,"fixture":"external-config-extends","entities":[
+{"ref":"file","identity":{"identityKind":"NAMED","filePath":"src/value.ts","kind":"FILE","qualifiedName":"src/value.ts"},"name":"value.ts","exported":false},
+{"ref":"value","identity":{"identityKind":"NAMED","filePath":"src/value.ts","kind":"VARIABLE","qualifiedName":"value"},"name":"value","exported":true}],
+"edges":[
+{"edgeType":"CONTAINS","sourceRef":"file","targetRef":"value","confidence":1,"metricTags":[],"evidence":null},
+{"edgeType":"EXPORTS","sourceRef":"file","targetRef":"value","confidence":1,"metricTags":[],"evidence":null}],
+"unresolvedRelationships":[],"expectedDiagnosticCodes":["TSCONFIG_ERROR"]}

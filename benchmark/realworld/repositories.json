@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "repositories": [
+    {
+      "slug": "typescript",
+      "owner": "microsoft",
+      "repository": "TypeScript",
+      "cloneUrl": "https://github.com/microsoft/TypeScript.git",
+      "commitSha": "5be33469d551655d878876faa9e30aa3b49f8ee9",
+      "releaseTag": "v5.9.2",
+      "license": "Apache-2.0",
+      "categories": ["TYPESCRIPT", "LARGE_SCALE"],
+      "purpose": "Large primarily-TypeScript compiler repository with project references, overloads, namespaces, and adversarial compiler inputs.",
+      "sizeEstimate": "XXL; expected to challenge the source-file and memory limits.",
+      "assertionsFile": "assertions/typescript.json"
+    },
+    {
+      "slug": "express",
+      "owner": "expressjs",
+      "repository": "express",
+      "cloneUrl": "https://github.com/expressjs/express.git",
+      "commitSha": "cd7d4397c398a3f3ecadeaf9ef6ac1377bd414c4",
+      "releaseTag": "v5.1.0",
+      "license": "MIT",
+      "categories": ["JAVASCRIPT_COMMONJS"],
+      "purpose": "Real CommonJS and dynamic JavaScript patterns in a widely used server framework.",
+      "sizeEstimate": "Small-to-medium; hundreds of JavaScript source, example, and test files.",
+      "assertionsFile": "assertions/express.json"
+    },
+    {
+      "slug": "pnpm",
+      "owner": "pnpm",
+      "repository": "pnpm",
+      "cloneUrl": "https://github.com/pnpm/pnpm.git",
+      "commitSha": "3d1711a4399d579930f3bb9bb6cd478eab3593e2",
+      "releaseTag": "v10.15.1",
+      "license": "MIT",
+      "categories": ["TYPESCRIPT", "MONOREPO", "LARGE_SCALE"],
+      "purpose": "Large TypeScript workspace with many internal packages, configurations, and package entrypoints.",
+      "sizeEstimate": "XL; thousands of TypeScript files across many workspace packages.",
+      "assertionsFile": "assertions/pnpm.json"
+    },
+    {
+      "slug": "react-router",
+      "owner": "remix-run",
+      "repository": "react-router",
+      "cloneUrl": "https://github.com/remix-run/react-router.git",
+      "commitSha": "e8e3b004d94a949372e77ce97a543bff5bc6fb89",
+      "releaseTag": "react-router@7.0.0",
+      "license": "MIT",
+      "categories": ["TYPESCRIPT", "MONOREPO", "REACT_TSX"],
+      "purpose": "React and TSX-heavy workspace with client/server packages, JSX references, and package exports.",
+      "sizeEstimate": "Large; substantial TypeScript and TSX across multiple packages.",
+      "assertionsFile": "assertions/react-router.json"
+    }
+  ]
+}

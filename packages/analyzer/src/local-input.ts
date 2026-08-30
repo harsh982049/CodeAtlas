@@ -10,6 +10,8 @@ import { createContentSourceRevision, createGitSourceRevision, type SourceRevisi
 export const defaultAnalysisLimits: AnalysisLimits = {
   maxFiles: 10_000,
   maxFileBytes: 2_000_000,
+  maxTraversalEntries: 100_000,
+  maxDirectoryDepth: 100,
   timeoutMilliseconds: 120_000,
 };
 

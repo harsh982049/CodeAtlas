@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "repository": "pnpm/pnpm",
+  "commitSha": "3d1711a4399d579930f3bb9bb6cd478eab3593e2",
+  "facts": [
+    {
+      "id": "pnpm-dependency-path-file",
+      "kind": "ENTITY",
+      "rationale": "A package source entry is represented as a file entity.",
+      "evidence": { "filePath": "packages/dependency-path/src/index.ts", "startLine": 5, "endLine": 5, "contentHash": "f1a05babfaeda2df2bfd2e6924877e9aad569f2a85a0c9548d9cbb7a6f8fc597" },
+      "subject": { "filePath": "packages/dependency-path/src/index.ts", "kind": "FILE", "qualifiedName": "packages/dependency-path/src/index.ts" }
+    },
+    {
+      "id": "pnpm-index-of-suffix",
+      "kind": "ENTITY",
+      "rationale": "The dependency path parser helper is extracted.",
+      "evidence": { "filePath": "packages/dependency-path/src/index.ts", "startLine": 9, "endLine": 9, "contentHash": "f1a05babfaeda2df2bfd2e6924877e9aad569f2a85a0c9548d9cbb7a6f8fc597" },
+      "subject": { "filePath": "packages/dependency-path/src/index.ts", "kind": "FUNCTION", "qualifiedName": "indexOfDepPathSuffix" }
+    },
+    {
+      "id": "pnpm-parse-dep-path",
+      "kind": "ENTITY",
+      "rationale": "The public dependency path parser is extracted.",
+      "evidence": { "filePath": "packages/dependency-path/src/index.ts", "startLine": 38, "endLine": 38, "contentHash": "f1a05babfaeda2df2bfd2e6924877e9aad569f2a85a0c9548d9cbb7a6f8fc597" },
+      "subject": { "filePath": "packages/dependency-path/src/index.ts", "kind": "FUNCTION", "qualifiedName": "parseDepPath" }
+    },
+    {
+      "id": "pnpm-remove-suffix",
+      "kind": "ENTITY",
+      "rationale": "A sibling exported utility is extracted separately.",
+      "evidence": { "filePath": "packages/dependency-path/src/index.ts", "startLine": 52, "endLine": 52, "contentHash": "f1a05babfaeda2df2bfd2e6924877e9aad569f2a85a0c9548d9cbb7a6f8fc597" },
+      "subject": { "filePath": "packages/dependency-path/src/index.ts", "kind": "FUNCTION", "qualifiedName": "removeSuffix" }
+    },
+    {
+      "id": "pnpm-parse-calls-index",
+      "kind": "EDGE",
+      "rationale": "A statically bound same-file call creates a call edge.",
+      "evidence": { "filePath": "packages/dependency-path/src/index.ts", "startLine": 39, "endLine": 39, "contentHash": "f1a05babfaeda2df2bfd2e6924877e9aad569f2a85a0c9548d9cbb7a6f8fc597" },
+      "edgeType": "CALLS",
+      "source": { "filePath": "packages/dependency-path/src/index.ts", "kind": "FUNCTION", "qualifiedName": "parseDepPath" },
+      "target": { "filePath": "packages/dependency-path/src/index.ts", "kind": "FUNCTION", "qualifiedName": "indexOfDepPathSuffix" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "pnpm-remove-calls-index",
+      "kind": "EDGE",
+      "rationale": "A second caller resolves to the same helper.",
+      "evidence": { "filePath": "packages/dependency-path/src/index.ts", "startLine": 53, "endLine": 53, "contentHash": "f1a05babfaeda2df2bfd2e6924877e9aad569f2a85a0c9548d9cbb7a6f8fc597" },
+      "edgeType": "CALLS",
+      "source": { "filePath": "packages/dependency-path/src/index.ts", "kind": "FUNCTION", "qualifiedName": "removeSuffix" },
+      "target": { "filePath": "packages/dependency-path/src/index.ts", "kind": "FUNCTION", "qualifiedName": "indexOfDepPathSuffix" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "pnpm-patched-id-calls-index",
+      "kind": "EDGE",
+      "rationale": "Call resolution remains correct for a typed alias input.",
+      "evidence": { "filePath": "packages/dependency-path/src/index.ts", "startLine": 65, "endLine": 65, "contentHash": "f1a05babfaeda2df2bfd2e6924877e9aad569f2a85a0c9548d9cbb7a6f8fc597" },
+      "edgeType": "CALLS",
+      "source": { "filePath": "packages/dependency-path/src/index.ts", "kind": "FUNCTION", "qualifiedName": "getPkgIdWithPatchHash" },
+      "target": { "filePath": "packages/dependency-path/src/index.ts", "kind": "FUNCTION", "qualifiedName": "indexOfDepPathSuffix" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "pnpm-semver-external",
+      "kind": "EDGE",
+      "rationale": "An uninstalled third-party dependency is represented externally.",
+      "evidence": { "filePath": "packages/dependency-path/src/index.ts", "startLine": 3, "endLine": 3, "contentHash": "f1a05babfaeda2df2bfd2e6924877e9aad569f2a85a0c9548d9cbb7a6f8fc597" },
+      "edgeType": "IMPORTS",
+      "source": { "filePath": "packages/dependency-path/src/index.ts", "kind": "FILE", "qualifiedName": "packages/dependency-path/src/index.ts" },
+      "target": { "filePath": null, "kind": "EXTERNAL_PACKAGE", "qualifiedName": "semver" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "pnpm-workspace-package-import",
+      "kind": "EDGE",
+      "rationale": "A workspace import resolves through a package export that names generated lib output back to retained src.",
+      "evidence": { "filePath": "packages/error/src/index.ts", "startLine": 1, "endLine": 1, "contentHash": "356b32c9fa16900da61d9412147b811f84221255b2d830b730eccfda5b00da92" },
+      "edgeType": "IMPORTS",
+      "source": { "filePath": "packages/error/src/index.ts", "kind": "FILE", "qualifiedName": "packages/error/src/index.ts" },
+      "target": { "filePath": "packages/constants/src/index.ts", "kind": "FILE", "qualifiedName": "packages/constants/src/index.ts" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "pnpm-constants-module",
+      "kind": "ENTITY",
+      "rationale": "Workspace package metadata creates a logical module entity.",
+      "evidence": { "filePath": "packages/constants/src/index.ts", "startLine": 22, "endLine": 22, "contentHash": "2fb8d134e99311d833cb47fe2953be9f775b01b9a5d0fcf33d0d5c7db657adfe" },
+      "subject": { "filePath": "packages/constants/package.json", "kind": "MODULE", "qualifiedName": "@pnpm/constants" }
+    }
+  ]
+}

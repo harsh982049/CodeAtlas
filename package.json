@@ -13,6 +13,8 @@
     "test": "vitest run",
     "benchmark:contracts": "pnpm --filter @codeatlas/benchmark benchmark:contracts",
     "benchmark:analyzer": "pnpm --filter @codeatlas/benchmark benchmark:analyzer",
+    "benchmark:realworld:materialize": "pnpm --filter @codeatlas/benchmark benchmark:realworld:materialize",
+    "benchmark:realworld": "pnpm --filter @codeatlas/benchmark benchmark:realworld",
     "codeatlas": "tsx packages/analyzer/src/cli.ts"
   },
   "devDependencies": {

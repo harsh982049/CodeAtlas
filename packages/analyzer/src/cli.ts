@@ -4,6 +4,7 @@ import path from "node:path";
 import { serializeCodeGraph } from "@codeatlas/codegraph";
 
 import { createLocalAnalyzerInput } from "./local-input.js";
+import { summarizeCodeGraph } from "./graph-summary.js";
 import { typescriptJavaScriptAnalyzer } from "./typescript-javascript-analyzer.js";
 
 interface CliOptions {
@@ -33,6 +34,7 @@ async function main(): Promise<void> {
   const input = await createLocalAnalyzerInput(options.repository);
   const result = await typescriptJavaScriptAnalyzer.analyze(input);
   const serializedGraph = serializeCodeGraph(result.graph);
+  const graphSummary = summarizeCodeGraph(result.graph, result.diagnostics, result.unresolvedRelationships);
   const document = {
     schemaVersion: 1,
     revision: input.revision,
@@ -42,6 +44,8 @@ async function main(): Promise<void> {
     stats: result.stats,
     diagnostics: result.diagnostics,
     unresolvedRelationships: result.unresolvedRelationships,
+    telemetry: result.telemetry,
+    graphSummary,
   };
   const json = `${JSON.stringify(document, null, 2)}\n`;
   const summary = [
@@ -51,8 +55,14 @@ async function main(): Promise<void> {
     `Files analyzed          ${result.stats.filesAnalyzed}`,
     `Files skipped           ${result.stats.filesSkipped}`,
     `Files failed            ${result.stats.filesFailed}`,
+    `Analyzed LOC            ${result.stats.sourceLinesAnalyzed}`,
     `Entities                ${result.stats.entitiesExtracted}`,
     `Edges                   ${result.stats.edgesCreated}`,
+    `Modules                 ${graphSummary.moduleCount}`,
+    `Connected components    ${graphSummary.connectedComponentCount}`,
+    `Largest component       ${graphSummary.largestConnectedComponent}`,
+    `Isolated entities       ${graphSummary.isolatedEntityCount}`,
+    `Anonymous entities      ${result.stats.anonymousEntitiesExtracted}`,
     `Resolved calls          ${result.stats.callsResolved}`,
     `Unresolved calls        ${result.stats.callsUnresolved}`,
     `Internal imports        ${result.stats.internalImports}`,
@@ -60,6 +70,7 @@ async function main(): Promise<void> {
     `Diagnostics             ${result.diagnostics.length}`,
     `Unresolved relations    ${result.unresolvedRelationships.length}`,
     `Elapsed                 ${result.stats.elapsedMs} ms`,
+    `Peak RSS                ${(result.telemetry.peakRssBytes / 1024 / 1024).toFixed(1)} MiB`,
   ].join("\n");
   process.stdout.write(`${summary}\n`);
   if (options.output !== null) {

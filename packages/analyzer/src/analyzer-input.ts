@@ -8,6 +8,8 @@ import type { SourceRevision } from "./source-revision.js";
 export interface AnalysisLimits {
   readonly maxFiles: number;
   readonly maxFileBytes: number;
+  readonly maxTraversalEntries: number;
+  readonly maxDirectoryDepth: number;
   readonly timeoutMilliseconds: number;
 }
 

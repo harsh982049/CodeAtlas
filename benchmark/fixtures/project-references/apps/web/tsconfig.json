@@ -1,0 +1,1 @@
+{"compilerOptions":{"composite":true,"target":"ES2022","module":"ESNext","moduleResolution":"Bundler","baseUrl":".","paths":{"@fixture/ref-shared":["../../packages/shared/src/index.ts"]}},"references":[{"path":"../../packages/shared"}],"include":["src/**/*.ts"]}

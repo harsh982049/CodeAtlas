@@ -98,3 +98,44 @@ export function fingerprintsFor(
     });
   return { declaration, implementation };
 }
+
+export function fingerprintsForDeclarations(
+  nodes: readonly ts.Node[],
+  kind: string,
+  exported: boolean,
+  defaultExport: boolean,
+): { declaration: DeclarationFingerprint; implementation: ImplementationFingerprint | null } {
+  if (nodes.length === 0) throw new Error("At least one declaration is required for fingerprinting");
+  const ordered = [...nodes].sort((left, right) => left.getStart(left.getSourceFile()) - right.getStart(right.getSourceFile()));
+  const declarationParts = ordered.map((node) => {
+    const sourceFile = node.getSourceFile();
+    return normalizedStructuralText(declarationText(node, sourceFile), sourceFile.languageVariant);
+  });
+  const implementationNode = ordered.find((node) => implementationText(node, node.getSourceFile()) !== null);
+  const declaration = createDeclarationFingerprint({
+    schemaVersion: 1,
+    kind,
+    exported,
+    defaultExport,
+    visibility: null,
+    modifiers: [],
+    typeParameters: [],
+    parameters: [],
+    returnType: null,
+    heritage: [],
+    overloads: [],
+    normalizedDeclarationText: declarationParts.join(" ; "),
+  });
+  const implementationMaterial = implementationNode === undefined
+    ? null
+    : implementationText(implementationNode, implementationNode.getSourceFile());
+  const implementation = implementationMaterial === null
+    ? null
+    : createImplementationFingerprint({
+      schemaVersion: 1,
+      kind,
+      normalizationVersion: "typescript-token-v1",
+      normalizedBody: normalizedStructuralText(implementationMaterial, implementationNode?.getSourceFile().languageVariant ?? ts.LanguageVariant.Standard),
+    });
+  return { declaration, implementation };
+}

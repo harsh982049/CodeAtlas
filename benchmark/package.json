@@ -11,7 +11,9 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run benchmark/test",
     "benchmark:contracts": "vitest run benchmark/test",
-    "benchmark:analyzer": "tsx src/analyzer-cli.ts"
+    "benchmark:analyzer": "tsx src/analyzer-cli.ts",
+    "benchmark:realworld:materialize": "tsx src/realworld-materialize-cli.ts",
+    "benchmark:realworld": "tsx src/realworld-cli.ts"
   },
   "dependencies": {
     "@codeatlas/analyzer": "workspace:*",

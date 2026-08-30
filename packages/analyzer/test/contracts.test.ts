@@ -25,7 +25,7 @@ const input: AnalyzerInput = {
   revision: createGitSourceRevision("a".repeat(40)),
   repositoryRoot: "/fixtures/typescript-basic",
   projectHints: [],
-  limits: { maxFiles: 100, maxFileBytes: 1_000_000, timeoutMilliseconds: 30_000 },
+  limits: { maxFiles: 100, maxFileBytes: 1_000_000, maxTraversalEntries: 1_000, maxDirectoryDepth: 20, timeoutMilliseconds: 30_000 },
 };
 
 describe("analyzer contracts", () => {
@@ -43,7 +43,10 @@ describe("analyzer contracts", () => {
       filesAnalyzed: 1,
       filesSkipped: 1,
       filesFailed: 0,
+      sourceBytesAnalyzed: 0,
+      sourceLinesAnalyzed: 0,
       entitiesExtracted: 0,
+      anonymousEntitiesExtracted: 0,
       edgesCreated: 0,
       callsResolved: 0,
       callsUnresolved: 0,
@@ -61,7 +64,10 @@ describe("analyzer contracts", () => {
         filesAnalyzed: 0,
         filesSkipped: 0,
         filesFailed: 0,
+        sourceBytesAnalyzed: 0,
+        sourceLinesAnalyzed: 0,
         entitiesExtracted: 0,
+        anonymousEntitiesExtracted: 0,
         edgesCreated: 0,
         callsResolved: 0,
         callsUnresolved: 0,
@@ -71,6 +77,13 @@ describe("analyzer contracts", () => {
       },
       diagnostics: [],
       unresolvedRelationships: [],
+      telemetry: {
+        phases: [],
+        peakRssBytes: 0,
+        peakRssMeasurement: "PROCESS_HIGH_WATER_MARK",
+        cpuUserMicroseconds: 0,
+        cpuSystemMicroseconds: 0,
+      },
     };
     const analyzer: LanguageAnalyzer = {
       name: "contract-double",

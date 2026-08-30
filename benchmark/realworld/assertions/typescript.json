@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "repository": "microsoft/TypeScript",
+  "commitSha": "5be33469d551655d878876faa9e30aa3b49f8ee9",
+  "facts": [
+    {
+      "id": "ts-core-file",
+      "kind": "ENTITY",
+      "rationale": "The compiler core source must be represented as a file entity.",
+      "evidence": { "filePath": "src/compiler/core.ts", "startLine": 33, "endLine": 33, "contentHash": "1512daf31972388d2c43d07b96ee202f659ba8e74e356b8f01d1f6e92192e92c" },
+      "subject": { "filePath": "src/compiler/core.ts", "kind": "FILE", "qualifiedName": "src/compiler/core.ts" }
+    },
+    {
+      "id": "ts-foreach-function",
+      "kind": "ENTITY",
+      "rationale": "A directly exported generic function is extracted.",
+      "evidence": { "filePath": "src/compiler/core.ts", "startLine": 33, "endLine": 33, "contentHash": "1512daf31972388d2c43d07b96ee202f659ba8e74e356b8f01d1f6e92192e92c" },
+      "subject": { "filePath": "src/compiler/core.ts", "kind": "FUNCTION", "qualifiedName": "forEach" }
+    },
+    {
+      "id": "ts-find-overload-set",
+      "kind": "ENTITY",
+      "rationale": "Three overload declarations form one logical callable entity.",
+      "evidence": { "filePath": "src/compiler/core.ts", "startLine": 162, "endLine": 166, "contentHash": "1512daf31972388d2c43d07b96ee202f659ba8e74e356b8f01d1f6e92192e92c" },
+      "subject": { "filePath": "src/compiler/core.ts", "kind": "FUNCTION", "qualifiedName": "find" }
+    },
+    {
+      "id": "ts-map-overload-set",
+      "kind": "ENTITY",
+      "rationale": "The map overload set is collapsed into one function.",
+      "evidence": { "filePath": "src/compiler/core.ts", "startLine": 316, "endLine": 320, "contentHash": "1512daf31972388d2c43d07b96ee202f659ba8e74e356b8f01d1f6e92192e92c" },
+      "subject": { "filePath": "src/compiler/core.ts", "kind": "FUNCTION", "qualifiedName": "map" }
+    },
+    {
+      "id": "ts-some-overload-set",
+      "kind": "ENTITY",
+      "rationale": "The some overload set is collapsed into one function.",
+      "evidence": { "filePath": "src/compiler/core.ts", "startLine": 614, "endLine": 618, "contentHash": "1512daf31972388d2c43d07b96ee202f659ba8e74e356b8f01d1f6e92192e92c" },
+      "subject": { "filePath": "src/compiler/core.ts", "kind": "FUNCTION", "qualifiedName": "some" }
+    },
+    {
+      "id": "ts-core-exports-foreach",
+      "kind": "EDGE",
+      "rationale": "Direct export syntax creates a file-to-entity export edge.",
+      "evidence": { "filePath": "src/compiler/core.ts", "startLine": 33, "endLine": 33, "contentHash": "1512daf31972388d2c43d07b96ee202f659ba8e74e356b8f01d1f6e92192e92c" },
+      "edgeType": "EXPORTS",
+      "source": { "filePath": "src/compiler/core.ts", "kind": "FILE", "qualifiedName": "src/compiler/core.ts" },
+      "target": { "filePath": "src/compiler/core.ts", "kind": "FUNCTION", "qualifiedName": "forEach" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "ts-core-exports-find",
+      "kind": "EDGE",
+      "rationale": "An overloaded exported function remains exported as one entity.",
+      "evidence": { "filePath": "src/compiler/core.ts", "startLine": 162, "endLine": 166, "contentHash": "1512daf31972388d2c43d07b96ee202f659ba8e74e356b8f01d1f6e92192e92c" },
+      "edgeType": "EXPORTS",
+      "source": { "filePath": "src/compiler/core.ts", "kind": "FILE", "qualifiedName": "src/compiler/core.ts" },
+      "target": { "filePath": "src/compiler/core.ts", "kind": "FUNCTION", "qualifiedName": "find" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "ts-namespace-imports-core",
+      "kind": "EDGE",
+      "rationale": "The generated namespace barrel imports the compiler core module.",
+      "evidence": { "filePath": "src/compiler/_namespaces/ts.ts", "startLine": 4, "endLine": 4, "contentHash": "74b899b9d4a9c709b9daa248cb9107227a705f0189eee82271ee84d3bbfc482b" },
+      "edgeType": "IMPORTS",
+      "source": { "filePath": "src/compiler/_namespaces/ts.ts", "kind": "FILE", "qualifiedName": "src/compiler/_namespaces/ts.ts" },
+      "target": { "filePath": "src/compiler/core.ts", "kind": "FILE", "qualifiedName": "src/compiler/core.ts" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "ts-namespace-reexports-find",
+      "kind": "EDGE",
+      "rationale": "Star-export propagation exposes functions through the namespace barrel.",
+      "evidence": { "filePath": "src/compiler/_namespaces/ts.ts", "startLine": 4, "endLine": 4, "contentHash": "74b899b9d4a9c709b9daa248cb9107227a705f0189eee82271ee84d3bbfc482b" },
+      "edgeType": "EXPORTS",
+      "source": { "filePath": "src/compiler/_namespaces/ts.ts", "kind": "FILE", "qualifiedName": "src/compiler/_namespaces/ts.ts" },
+      "target": { "filePath": "src/compiler/core.ts", "kind": "FUNCTION", "qualifiedName": "find" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "ts-create-multimap",
+      "kind": "ENTITY",
+      "rationale": "A later generic compiler utility is retained beyond the opening declarations.",
+      "evidence": { "filePath": "src/compiler/core.ts", "startLine": 1542, "endLine": 1542, "contentHash": "1512daf31972388d2c43d07b96ee202f659ba8e74e356b8f01d1f6e92192e92c" },
+      "subject": { "filePath": "src/compiler/core.ts", "kind": "FUNCTION", "qualifiedName": "createMultiMap" }
+    }
+  ]
+}

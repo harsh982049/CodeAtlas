@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "repository": "remix-run/react-router",
+  "commitSha": "e8e3b004d94a949372e77ce97a543bff5bc6fb89",
+  "facts": [
+    {
+      "id": "rr-history-file",
+      "kind": "ENTITY",
+      "rationale": "The router history implementation is represented as a file.",
+      "evidence": { "filePath": "packages/react-router/lib/router/history.ts", "startLine": 486, "endLine": 486, "contentHash": "eb81cf98b8aebb1ff3724e208c473e96e6c885d64e0c1b9d229062a49c954b5d" },
+      "subject": { "filePath": "packages/react-router/lib/router/history.ts", "kind": "FILE", "qualifiedName": "packages/react-router/lib/router/history.ts" }
+    },
+    {
+      "id": "rr-invariant-overload-set",
+      "kind": "ENTITY",
+      "rationale": "Assertion overloads and implementation form one logical callable.",
+      "evidence": { "filePath": "packages/react-router/lib/router/history.ts", "startLine": 486, "endLine": 493, "contentHash": "eb81cf98b8aebb1ff3724e208c473e96e6c885d64e0c1b9d229062a49c954b5d" },
+      "subject": { "filePath": "packages/react-router/lib/router/history.ts", "kind": "FUNCTION", "qualifiedName": "invariant" }
+    },
+    {
+      "id": "rr-create-location",
+      "kind": "ENTITY",
+      "rationale": "The exported location constructor is extracted.",
+      "evidence": { "filePath": "packages/react-router/lib/router/history.ts", "startLine": 530, "endLine": 535, "contentHash": "eb81cf98b8aebb1ff3724e208c473e96e6c885d64e0c1b9d229062a49c954b5d" },
+      "subject": { "filePath": "packages/react-router/lib/router/history.ts", "kind": "FUNCTION", "qualifiedName": "createLocation" }
+    },
+    {
+      "id": "rr-create-location-calls-parse-path",
+      "kind": "EDGE",
+      "rationale": "A conditional spread call resolves to the local parser.",
+      "evidence": { "filePath": "packages/react-router/lib/router/history.ts", "startLine": 540, "endLine": 540, "contentHash": "eb81cf98b8aebb1ff3724e208c473e96e6c885d64e0c1b9d229062a49c954b5d" },
+      "edgeType": "CALLS",
+      "source": { "filePath": "packages/react-router/lib/router/history.ts", "kind": "FUNCTION", "qualifiedName": "createLocation" },
+      "target": { "filePath": "packages/react-router/lib/router/history.ts", "kind": "FUNCTION", "qualifiedName": "parsePath" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "rr-create-location-calls-create-key",
+      "kind": "EDGE",
+      "rationale": "The fallback key generation call resolves to a private helper.",
+      "evidence": { "filePath": "packages/react-router/lib/router/history.ts", "startLine": 546, "endLine": 546, "contentHash": "eb81cf98b8aebb1ff3724e208c473e96e6c885d64e0c1b9d229062a49c954b5d" },
+      "edgeType": "CALLS",
+      "source": { "filePath": "packages/react-router/lib/router/history.ts", "kind": "FUNCTION", "qualifiedName": "createLocation" },
+      "target": { "filePath": "packages/react-router/lib/router/history.ts", "kind": "FUNCTION", "qualifiedName": "createKey" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "rr-router-provider-component",
+      "kind": "ENTITY",
+      "rationale": "A PascalCase function containing JSX is identified as a probable React component.",
+      "evidence": { "filePath": "packages/react-router/lib/components.tsx", "startLine": 197, "endLine": 200, "contentHash": "78088ee87d043e110d7f4a675dd3ba25bcd381d2e1d0020f75f0b09333ab4757" },
+      "subject": { "filePath": "packages/react-router/lib/components.tsx", "kind": "COMPONENT", "qualifiedName": "RouterProvider" }
+    },
+    {
+      "id": "rr-memory-router-component",
+      "kind": "ENTITY",
+      "rationale": "A smaller JSX-returning function is also identified as a component.",
+      "evidence": { "filePath": "packages/react-router/lib/components.tsx", "startLine": 475, "endLine": 480, "contentHash": "78088ee87d043e110d7f4a675dd3ba25bcd381d2e1d0020f75f0b09333ab4757" },
+      "subject": { "filePath": "packages/react-router/lib/components.tsx", "kind": "COMPONENT", "qualifiedName": "MemoryRouter" }
+    },
+    {
+      "id": "rr-components-imports-history",
+      "kind": "EDGE",
+      "rationale": "Both type and value imports resolve to the retained history source.",
+      "evidence": { "filePath": "packages/react-router/lib/components.tsx", "startLine": 3, "endLine": 15, "contentHash": "78088ee87d043e110d7f4a675dd3ba25bcd381d2e1d0020f75f0b09333ab4757" },
+      "edgeType": "IMPORTS",
+      "source": { "filePath": "packages/react-router/lib/components.tsx", "kind": "FILE", "qualifiedName": "packages/react-router/lib/components.tsx" },
+      "target": { "filePath": "packages/react-router/lib/router/history.ts", "kind": "FILE", "qualifiedName": "packages/react-router/lib/router/history.ts" },
+      "minimumConfidence": 1
+    },
+    {
+      "id": "rr-map-route-properties",
+      "kind": "ENTITY",
+      "rationale": "A non-component exported function in a TSX file remains a function.",
+      "evidence": { "filePath": "packages/react-router/lib/components.tsx", "startLine": 72, "endLine": 72, "contentHash": "78088ee87d043e110d7f4a675dd3ba25bcd381d2e1d0020f75f0b09333ab4757" },
+      "subject": { "filePath": "packages/react-router/lib/components.tsx", "kind": "FUNCTION", "qualifiedName": "mapRouteProperties" }
+    },
+    {
+      "id": "rr-outlet-component",
+      "kind": "ENTITY",
+      "rationale": "A PascalCase function without statically visible JSX remains a function under the conservative component heuristic.",
+      "evidence": { "filePath": "packages/react-router/lib/components.tsx", "startLine": 611, "endLine": 611, "contentHash": "78088ee87d043e110d7f4a675dd3ba25bcd381d2e1d0020f75f0b09333ab4757" },
+      "subject": { "filePath": "packages/react-router/lib/components.tsx", "kind": "FUNCTION", "qualifiedName": "Outlet" }
+    }
+  ]
+}

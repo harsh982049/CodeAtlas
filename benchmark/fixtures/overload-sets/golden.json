@@ -1,0 +1,17 @@
+{"schemaVersion":1,"fixture":"overload-sets","entities":[
+{"ref":"file","identity":{"identityKind":"NAMED","filePath":"src/overloads.ts","kind":"FILE","qualifiedName":"src/overloads.ts"},"name":"overloads.ts","exported":false},
+{"ref":"parse","identity":{"identityKind":"NAMED","filePath":"src/overloads.ts","kind":"FUNCTION","qualifiedName":"parse"},"name":"parse","exported":true},
+{"ref":"parser","identity":{"identityKind":"NAMED","filePath":"src/overloads.ts","kind":"CLASS","qualifiedName":"Parser"},"name":"Parser","exported":true},
+{"ref":"run","identity":{"identityKind":"NAMED","filePath":"src/overloads.ts","kind":"METHOD","qualifiedName":"Parser.run"},"name":"run","exported":false},
+{"ref":"use","identity":{"identityKind":"NAMED","filePath":"src/overloads.ts","kind":"FUNCTION","qualifiedName":"useParser"},"name":"useParser","exported":true}],
+"edges":[
+{"edgeType":"CONTAINS","sourceRef":"file","targetRef":"parse","confidence":1,"metricTags":[],"evidence":null},
+{"edgeType":"CONTAINS","sourceRef":"file","targetRef":"parser","confidence":1,"metricTags":[],"evidence":null},
+{"edgeType":"CONTAINS","sourceRef":"parser","targetRef":"run","confidence":1,"metricTags":[],"evidence":null},
+{"edgeType":"CONTAINS","sourceRef":"file","targetRef":"use","confidence":1,"metricTags":[],"evidence":null},
+{"edgeType":"EXPORTS","sourceRef":"file","targetRef":"parse","confidence":1,"metricTags":[],"evidence":null},
+{"edgeType":"EXPORTS","sourceRef":"file","targetRef":"parser","confidence":1,"metricTags":[],"evidence":null},
+{"edgeType":"EXPORTS","sourceRef":"file","targetRef":"use","confidence":1,"metricTags":[],"evidence":null},
+{"edgeType":"CALLS","sourceRef":"run","targetRef":"parse","confidence":1,"metricTags":["CALL_RESOLUTION"],"evidence":null},
+{"edgeType":"CALLS","sourceRef":"use","targetRef":"parse","confidence":1,"metricTags":["CALL_RESOLUTION"],"evidence":null}],
+"unresolvedRelationships":[],"expectedDiagnosticCodes":[]}
