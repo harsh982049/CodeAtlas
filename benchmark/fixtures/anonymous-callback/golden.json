@@ -1,0 +1,16 @@
+{
+  "schemaVersion":1,"fixture":"anonymous-callback",
+  "entities":[
+    {"ref":"file","identity":{"identityKind":"NAMED","filePath":"src/callback.ts","kind":"FILE","qualifiedName":"src/callback.ts"},"name":"callback.ts","exported":false},
+    {"ref":"invoke","identity":{"identityKind":"NAMED","filePath":"src/callback.ts","kind":"FUNCTION","qualifiedName":"invoke"},"name":"invoke","exported":true},
+    {"ref":"result","identity":{"identityKind":"NAMED","filePath":"src/callback.ts","kind":"VARIABLE","qualifiedName":"result"},"name":"result","exported":true},
+    {"ref":"callback","identity":{"identityKind":"ANONYMOUS","filePath":"src/callback.ts","kind":"FUNCTION","lexicalParentRef":"result","syntacticRole":"CALL_ARGUMENT:0#1","localStructuralText":"( ) => 1"},"name":"<anonymous>","exported":false}
+  ],
+  "edges":[
+    {"edgeType":"CONTAINS","sourceRef":"file","targetRef":"invoke","confidence":1,"evidence":{"filePath":"src/callback.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":75,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"file","targetRef":"invoke","confidence":1,"evidence":{"filePath":"src/callback.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":75,"kind":"SYNTAX"}},
+    {"edgeType":"CONTAINS","sourceRef":"file","targetRef":"result","confidence":1,"evidence":{"filePath":"src/callback.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":42,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"file","targetRef":"result","confidence":1,"evidence":{"filePath":"src/callback.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":42,"kind":"SYNTAX"}},
+    {"edgeType":"CALLS","sourceRef":"result","targetRef":"invoke","confidence":1,"evidence":{"filePath":"src/callback.ts","startLine":2,"startColumn":23,"endLine":2,"endColumn":41,"kind":"STATIC_RESOLUTION"}}
+  ],"unresolvedRelationships":[],"expectedDiagnosticCodes":[]
+}

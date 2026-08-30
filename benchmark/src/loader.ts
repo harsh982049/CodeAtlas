@@ -31,8 +31,13 @@ export async function loadFixture(directory: string): Promise<LoadedFixture> {
     if (!inside(directory, filePath) || !(await stat(filePath)).isFile()) throw new Error(`Fixture file is missing or unsafe: ${relative}`);
   }
   const sourceSet = new Set(manifest.sourceFiles);
+  const projectSet = new Set(manifest.projectFiles);
   for (const entity of golden.entities) {
-    if (entity.identity.identityKind === "NAMED" && !sourceSet.has(entity.identity.filePath)) throw new Error(`Golden entity points outside sourceFiles: ${entity.ref}`);
+    if (entity.identity.identityKind === "EXTERNAL_PACKAGE") continue;
+    const isLogicalModule = entity.identity.kind === "MODULE";
+    if (!sourceSet.has(entity.identity.filePath) && !(isLogicalModule && projectSet.has(entity.identity.filePath))) {
+      throw new Error(`Golden entity points outside declared fixture files: ${entity.ref}`);
+    }
   }
   for (const edge of golden.edges) {
     if (edge.evidence !== null) await validateEvidence(directory, sourceSet, edge.evidence.filePath, edge.evidence.endLine);

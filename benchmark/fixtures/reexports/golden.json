@@ -8,6 +8,7 @@
   ],
   "edges":[
     {"edgeType":"CONTAINS","sourceRef":"foo-file","targetRef":"foo","confidence":1,"evidence":{"filePath":"src/foo.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":44,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"foo-file","targetRef":"foo","confidence":1,"evidence":{"filePath":"src/foo.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":44,"kind":"SYNTAX"}},
     {"edgeType":"IMPORTS","sourceRef":"barrel","targetRef":"foo-file","confidence":1,"evidence":{"filePath":"src/barrel.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":35,"kind":"STATIC_RESOLUTION"}},
     {"edgeType":"EXPORTS","sourceRef":"barrel","targetRef":"foo","confidence":1,"evidence":{"filePath":"src/barrel.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":35,"kind":"STATIC_RESOLUTION"}},
     {"edgeType":"IMPORTS","sourceRef":"index","targetRef":"barrel","confidence":1,"evidence":{"filePath":"src/index.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":29,"kind":"STATIC_RESOLUTION"}},

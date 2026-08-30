@@ -1,3 +1,4 @@
+export * from "./analyzer-runner.js";
 export * from "./comparison.js";
 export * from "./contract-runner.js";
 export * from "./loader.js";

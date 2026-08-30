@@ -11,15 +11,17 @@
     "typecheck": "pnpm -r --if-present typecheck",
     "lint": "eslint .",
     "test": "vitest run",
-    "benchmark:contracts": "pnpm --filter @codeatlas/benchmark benchmark:contracts"
+    "benchmark:contracts": "pnpm --filter @codeatlas/benchmark benchmark:contracts",
+    "benchmark:analyzer": "pnpm --filter @codeatlas/benchmark benchmark:analyzer",
+    "codeatlas": "tsx packages/analyzer/src/cli.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@types/node": "22.20.1",
     "eslint": "10.9.1",
+    "tsx": "4.20.6",
     "typescript": "6.0.3",
     "typescript-eslint": "8.68.0",
     "vitest": "4.1.10"
   }
 }
-

@@ -1,0 +1,17 @@
+{
+  "schemaVersion":1,"fixture":"no-config",
+  "entities":[
+    {"ref":"helper-file","identity":{"identityKind":"NAMED","filePath":"src/helper.js","kind":"FILE","qualifiedName":"src/helper.js"},"name":"helper.js","exported":false},
+    {"ref":"helper","identity":{"identityKind":"NAMED","filePath":"src/helper.js","kind":"FUNCTION","qualifiedName":"helper"},"name":"helper","exported":true},
+    {"ref":"main-file","identity":{"identityKind":"NAMED","filePath":"src/main.js","kind":"FILE","qualifiedName":"src/main.js"},"name":"main.js","exported":false},
+    {"ref":"value","identity":{"identityKind":"NAMED","filePath":"src/main.js","kind":"VARIABLE","qualifiedName":"value"},"name":"value","exported":true}
+  ],
+  "edges":[
+    {"edgeType":"CONTAINS","sourceRef":"helper-file","targetRef":"helper","confidence":1,"evidence":{"filePath":"src/helper.js","startLine":1,"startColumn":1,"endLine":1,"endColumn":39,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"helper-file","targetRef":"helper","confidence":1,"evidence":{"filePath":"src/helper.js","startLine":1,"startColumn":1,"endLine":1,"endColumn":39,"kind":"SYNTAX"}},
+    {"edgeType":"IMPORTS","sourceRef":"main-file","targetRef":"helper-file","confidence":1,"evidence":{"filePath":"src/main.js","startLine":1,"startColumn":1,"endLine":1,"endColumn":39,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"CONTAINS","sourceRef":"main-file","targetRef":"value","confidence":1,"evidence":{"filePath":"src/main.js","startLine":2,"startColumn":1,"endLine":2,"endColumn":31,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"main-file","targetRef":"value","confidence":1,"evidence":{"filePath":"src/main.js","startLine":2,"startColumn":1,"endLine":2,"endColumn":31,"kind":"SYNTAX"}},
+    {"edgeType":"CALLS","sourceRef":"value","targetRef":"helper","confidence":1,"evidence":{"filePath":"src/main.js","startLine":2,"startColumn":22,"endLine":2,"endColumn":30,"kind":"STATIC_RESOLUTION"}}
+  ],"unresolvedRelationships":[],"expectedDiagnosticCodes":[]
+}

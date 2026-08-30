@@ -1,0 +1,15 @@
+{
+  "schemaVersion":1,"fixture":"callable-bindings",
+  "entities":[
+    {"ref":"file","identity":{"identityKind":"NAMED","filePath":"src/callables.ts","kind":"FILE","qualifiedName":"src/callables.ts"},"name":"callables.ts","exported":false},
+    {"ref":"arrow","identity":{"identityKind":"NAMED","filePath":"src/callables.ts","kind":"FUNCTION","qualifiedName":"arrow"},"name":"arrow","exported":true},
+    {"ref":"named","identity":{"identityKind":"NAMED","filePath":"src/callables.ts","kind":"FUNCTION","qualifiedName":"named"},"name":"named","exported":true}
+  ],
+  "edges":[
+    {"edgeType":"CONTAINS","sourceRef":"file","targetRef":"arrow","confidence":1,"evidence":{"filePath":"src/callables.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":30,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"file","targetRef":"arrow","confidence":1,"evidence":{"filePath":"src/callables.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":30,"kind":"SYNTAX"}},
+    {"edgeType":"CONTAINS","sourceRef":"file","targetRef":"named","confidence":1,"evidence":{"filePath":"src/callables.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":65,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"file","targetRef":"named","confidence":1,"evidence":{"filePath":"src/callables.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":65,"kind":"SYNTAX"}},
+    {"edgeType":"CALLS","sourceRef":"named","targetRef":"arrow","confidence":1,"evidence":{"filePath":"src/callables.ts","startLine":2,"startColumn":55,"endLine":2,"endColumn":62,"kind":"STATIC_RESOLUTION"}}
+  ],"unresolvedRelationships":[],"expectedDiagnosticCodes":[]
+}

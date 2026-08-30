@@ -10,7 +10,8 @@
   "scripts": {
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run benchmark/test",
-    "benchmark:contracts": "vitest run benchmark/test"
+    "benchmark:contracts": "vitest run benchmark/test",
+    "benchmark:analyzer": "tsx src/analyzer-cli.ts"
   },
   "dependencies": {
     "@codeatlas/analyzer": "workspace:*",

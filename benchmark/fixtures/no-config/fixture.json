@@ -1,0 +1,1 @@
+{"schemaVersion":1,"name":"no-config","description":"JavaScript source analysis works without a tsconfig or jsconfig.","languages":["JAVASCRIPT"],"behaviors":["inferred project","JavaScript ESM resolution"],"intentionallyUnresolvedRelationships":[],"projectFiles":[],"sourceFiles":["src/helper.js","src/main.js"],"goldenFile":"golden.json"}

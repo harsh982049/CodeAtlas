@@ -3396,57 +3396,53 @@ The implementation order follows technical dependencies rather than calendar wee
 
 ### Milestone 1 — Contracts, fixtures, and benchmarks
 
-Define code-entity and edge contracts, edge directions, confidence vocabulary, snapshot identity, symbol fingerprints, and benchmark schemas. Create pinned synthetic fixtures and initial golden expectations before writing analyzer behavior. Document the 4 vCPU / 8 GB benchmark worker and cold-index versus warm-query methodology.
+Define code-entity and edge contracts, edge directions, confidence vocabulary, snapshot identity, symbol fingerprints, and benchmark schemas. Create the minimal TypeScript/pnpm scaffold, pinned synthetic fixtures, and initial golden expectations before writing analyzer behavior. Document the 4 vCPU / 8 GB benchmark worker and cold-index versus warm-query methodology.
 
-### Milestone 2 — Minimal TypeScript project scaffold
-
-Create only the monorepo, shared TypeScript configuration, package boundaries, test runner, lint/type-check commands, and CI needed to develop the core safely. Infrastructure should remain minimal; no AI-specific feature belongs here.
-
-### Milestone 3 — In-memory analyzer
+### Milestone 2 — In-memory analyzer
 
 Implement project discovery, safe compiler configuration, TypeScript `Program`/`TypeChecker` analysis, logical stable keys, declaration and implementation fingerprints, and unresolved-dependency representation. Validate against the fixture repositories without requiring PostgreSQL or a UI.
 
-### Milestone 4 — Code graph
+### Milestone 3 — Code graph hardening
 
 Build generic `code_entities` and `code_edges`, enforce edge domains/directions, resolve structural relationships, attach provenance/evidence/confidence, and implement in-memory direct/reverse/bounded traversal.
 
-### Milestone 5 — PostgreSQL snapshots and persistence
+### Milestone 4 — PostgreSQL snapshots and persistence
 
 Persist immutable analysis snapshots, files, entities, edges, chunks, history metadata, jobs, and authorization records. Add BUILDING/READY/FAILED publication, idempotency, `current_snapshot_id`, retention, MinIO source blobs, and atomic publication.
 
-### Milestone 6 — Thin explorer
+### Milestone 5 — Thin explorer
 
 Deliver repository status, entity search/detail, callers/callees, a lazy one-hop graph, and authorized read-only source viewing. This is the first end-to-end product slice.
 
-### Milestone 7 — Semantic and hybrid retrieval
+### Milestone 6 — Semantic and hybrid retrieval
 
 Add semantic chunks, separate embedding indexes and chunk embeddings, lexical/exact search, pgvector retrieval, graph expansion, RRF, consent enforcement, redaction, and retrieval benchmarks.
 
-### Milestone 8 — Grounded Q&A
+### Milestone 7 — Grounded Q&A
 
 Add intent classification, typed evidence, claim-level evidence IDs, structured generation, active-snapshot citation validation, answer confidence, and human-labelled entailment evaluation.
 
-### Milestone 9 — Local Git intelligence
+### Milestone 8 — Local Git intelligence
 
 Eagerly index commit metadata, changed files, churn, rename-aware file history, and file-level coupling. Add lazy/cached symbol blame. Keep GitHub PR/issue retrieval out of the critical structural publication path.
 
-### Milestone 10 — Impact analysis
+### Milestone 9 — Impact analysis
 
 Implement typed reverse traversal, three-hop bounds, explainable paths, dimension-level risk severity, impact certainty, related-test discovery, historical signals, benchmarks, and the impact UI.
 
-### Milestone 11 — Base/head diff analysis
+### Milestone 10 — Base/head diff analysis
 
 Analyze exact SHAs, apply Git rename mappings, match logical entities across snapshots, distinguish declaration from implementation changes, and aggregate per-entity blast radii.
 
-### Milestone 12 — Incremental indexing and webhooks
+### Milestone 11 — Incremental indexing and webhooks
 
 Implement content reuse, fingerprint-aware invalidation, the two-hop/500-file/20% bounds, full-analysis fallback, webhook deduplication, retries, and atomic incremental publication.
 
-### Milestone 13 — Complete GitHub integration
+### Milestone 12 — Complete GitHub integration
 
 Complete GitHub login, installation authorization, repository selection, PR/issue association, cached historical evidence, revocation handling, and exact-SHA PR analysis.
 
-### Milestone 14 — Framework hardening, security, observability, and deployment
+### Milestone 13 — Framework hardening, security, observability, and deployment
 
 Finish the Express/Next.js/React V1 matrix, adversarial repository tests, external-AI privacy controls, cleanup and retention jobs, performance work, OpenTelemetry, Docker Compose, AWS deployment, benchmark report, public demo, and portfolio documentation.
 

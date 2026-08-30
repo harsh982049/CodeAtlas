@@ -29,6 +29,14 @@ export type GoldenIdentity =
       readonly identityKind: "EXTERNAL_PACKAGE";
       readonly ecosystem: ExternalPackageEcosystem;
       readonly packageName: string;
+    }
+  | {
+      readonly identityKind: "ANONYMOUS";
+      readonly filePath: string;
+      readonly kind: "FUNCTION";
+      readonly lexicalParentRef: string;
+      readonly syntacticRole: string;
+      readonly localStructuralText: string;
     };
 
 export interface GoldenEntity {

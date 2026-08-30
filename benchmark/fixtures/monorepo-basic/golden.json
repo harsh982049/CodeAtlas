@@ -1,15 +1,25 @@
 {
-  "schemaVersion":1,"fixture":"monorepo-basic",
-  "entities":[
+  "schemaVersion": 1,
+  "fixture": "monorepo-basic",
+  "entities": [
+    {"ref":"web-module","identity":{"identityKind":"NAMED","filePath":"apps/web/package.json","kind":"MODULE","qualifiedName":"@fixture/web"},"name":"@fixture/web","exported":false},
+    {"ref":"shared-module","identity":{"identityKind":"NAMED","filePath":"packages/shared/package.json","kind":"MODULE","qualifiedName":"@fixture/shared"},"name":"@fixture/shared","exported":false},
     {"ref":"shared-file","identity":{"identityKind":"NAMED","filePath":"packages/shared/src/index.ts","kind":"FILE","qualifiedName":"packages/shared/src/index.ts"},"name":"index.ts","exported":false},
     {"ref":"format-money","identity":{"identityKind":"NAMED","filePath":"packages/shared/src/index.ts","kind":"FUNCTION","qualifiedName":"formatMoney"},"name":"formatMoney","exported":true},
     {"ref":"web-file","identity":{"identityKind":"NAMED","filePath":"apps/web/src/main.ts","kind":"FILE","qualifiedName":"apps/web/src/main.ts"},"name":"main.ts","exported":false},
     {"ref":"label","identity":{"identityKind":"NAMED","filePath":"apps/web/src/main.ts","kind":"VARIABLE","qualifiedName":"label"},"name":"label","exported":true}
   ],
-  "edges":[
+  "edges": [
+    {"edgeType":"CONTAINS","sourceRef":"shared-module","targetRef":"shared-file","confidence":1,"evidence":{"filePath":"packages/shared/src/index.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":81,"kind":"SYNTAX"}},
     {"edgeType":"CONTAINS","sourceRef":"shared-file","targetRef":"format-money","confidence":1,"evidence":{"filePath":"packages/shared/src/index.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":81,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"shared-file","targetRef":"format-money","confidence":1,"evidence":{"filePath":"packages/shared/src/index.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":81,"kind":"SYNTAX"}},
+    {"edgeType":"CONTAINS","sourceRef":"web-module","targetRef":"web-file","confidence":1,"evidence":{"filePath":"apps/web/src/main.ts","startLine":1,"startColumn":1,"endLine":2,"endColumn":38,"kind":"SYNTAX"}},
+    {"edgeType":"DEPENDS_ON","sourceRef":"web-module","targetRef":"shared-module","confidence":1,"evidence":{"filePath":"apps/web/src/main.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":53,"kind":"STATIC_RESOLUTION"}},
     {"edgeType":"IMPORTS","sourceRef":"web-file","targetRef":"shared-file","confidence":1,"evidence":{"filePath":"apps/web/src/main.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":53,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"CONTAINS","sourceRef":"web-file","targetRef":"label","confidence":1,"evidence":{"filePath":"apps/web/src/main.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":38,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"web-file","targetRef":"label","confidence":1,"evidence":{"filePath":"apps/web/src/main.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":38,"kind":"SYNTAX"}},
     {"edgeType":"CALLS","sourceRef":"label","targetRef":"format-money","confidence":1,"evidence":{"filePath":"apps/web/src/main.ts","startLine":2,"startColumn":22,"endLine":2,"endColumn":37,"kind":"STATIC_RESOLUTION"}}
   ],
-  "unresolvedRelationships":[],"expectedDiagnosticCodes":[]
+  "unresolvedRelationships": [],
+  "expectedDiagnosticCodes": []
 }

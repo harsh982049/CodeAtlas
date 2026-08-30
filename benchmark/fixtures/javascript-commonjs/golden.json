@@ -1,15 +1,20 @@
 {
-  "schemaVersion":1,"fixture":"javascript-commonjs",
-  "entities":[
+  "schemaVersion": 1,
+  "fixture": "javascript-commonjs",
+  "entities": [
     {"ref":"payments-file","identity":{"identityKind":"NAMED","filePath":"src/payments.js","kind":"FILE","qualifiedName":"src/payments.js"},"name":"payments.js","exported":false},
     {"ref":"charge","identity":{"identityKind":"NAMED","filePath":"src/payments.js","kind":"FUNCTION","qualifiedName":"charge"},"name":"charge","exported":true},
     {"ref":"main-file","identity":{"identityKind":"NAMED","filePath":"src/main.js","kind":"FILE","qualifiedName":"src/main.js"},"name":"main.js","exported":false},
     {"ref":"result","identity":{"identityKind":"NAMED","filePath":"src/main.js","kind":"VARIABLE","qualifiedName":"result"},"name":"result","exported":true}
   ],
-  "edges":[
-    {"edgeType":"CONTAINS","sourceRef":"payments-file","targetRef":"charge","confidence":1,"evidence":{"filePath":"src/payments.js","startLine":1,"startColumn":1,"endLine":1,"endColumn":44,"kind":"SYNTAX"}},
+  "edges": [
+    {"edgeType":"CONTAINS","sourceRef":"payments-file","targetRef":"charge","confidence":1,"evidence":{"filePath":"src/payments.js","startLine":1,"startColumn":1,"endLine":1,"endColumn":37,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"payments-file","targetRef":"charge","confidence":1,"evidence":{"filePath":"src/payments.js","startLine":2,"startColumn":1,"endLine":2,"endColumn":29,"kind":"SYNTAX"}},
     {"edgeType":"IMPORTS","sourceRef":"main-file","targetRef":"payments-file","confidence":1,"evidence":{"filePath":"src/main.js","startLine":1,"startColumn":1,"endLine":1,"endColumn":49,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"CONTAINS","sourceRef":"main-file","targetRef":"result","confidence":1,"evidence":{"filePath":"src/main.js","startLine":2,"startColumn":1,"endLine":2,"endColumn":27,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"main-file","targetRef":"result","confidence":1,"evidence":{"filePath":"src/main.js","startLine":2,"startColumn":1,"endLine":2,"endColumn":27,"kind":"SYNTAX"}},
     {"edgeType":"CALLS","sourceRef":"result","targetRef":"charge","confidence":1,"evidence":{"filePath":"src/main.js","startLine":2,"startColumn":18,"endLine":2,"endColumn":26,"kind":"STATIC_RESOLUTION"}}
   ],
-  "unresolvedRelationships":[],"expectedDiagnosticCodes":[]
+  "unresolvedRelationships": [],
+  "expectedDiagnosticCodes": []
 }

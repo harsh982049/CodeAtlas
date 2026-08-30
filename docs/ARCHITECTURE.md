@@ -2,7 +2,7 @@
 
 This document is the architecture entry point required by `AGENTS.md`. The complete product and engineering contract is in [`CODEATLAS_V1_SPEC.md`](./CODEATLAS_V1_SPEC.md); accepted decisions and their consequences are in [`adr/`](./adr/).
 
-The executable Milestone 1 boundaries are documented in [`CODE_GRAPH_CONTRACT.md`](./CODE_GRAPH_CONTRACT.md), and the fixture/golden evaluation method is documented in [`BENCHMARKS.md`](./BENCHMARKS.md).
+The executable graph boundaries are documented in [`CODE_GRAPH_CONTRACT.md`](./CODE_GRAPH_CONTRACT.md), the Milestone 2 compiler frontend in [`ANALYZER.md`](./ANALYZER.md), and the fixture/golden evaluation method in [`BENCHMARKS.md`](./BENCHMARKS.md).
 
 ## System shape
 

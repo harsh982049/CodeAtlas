@@ -1,15 +1,20 @@
 {
-  "schemaVersion":1,"fixture":"javascript-esm",
-  "entities":[
+  "schemaVersion": 1,
+  "fixture": "javascript-esm",
+  "entities": [
     {"ref":"math-file","identity":{"identityKind":"NAMED","filePath":"src/math.js","kind":"FILE","qualifiedName":"src/math.js"},"name":"math.js","exported":false},
     {"ref":"add","identity":{"identityKind":"NAMED","filePath":"src/math.js","kind":"FUNCTION","qualifiedName":"add"},"name":"add","exported":true},
     {"ref":"main-file","identity":{"identityKind":"NAMED","filePath":"src/main.js","kind":"FILE","qualifiedName":"src/main.js"},"name":"main.js","exported":false},
     {"ref":"total","identity":{"identityKind":"NAMED","filePath":"src/main.js","kind":"VARIABLE","qualifiedName":"total"},"name":"total","exported":true}
   ],
-  "edges":[
+  "edges": [
     {"edgeType":"CONTAINS","sourceRef":"math-file","targetRef":"add","confidence":1,"evidence":{"filePath":"src/math.js","startLine":1,"startColumn":1,"endLine":1,"endColumn":58,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"math-file","targetRef":"add","confidence":1,"evidence":{"filePath":"src/math.js","startLine":1,"startColumn":1,"endLine":1,"endColumn":58,"kind":"SYNTAX"}},
     {"edgeType":"IMPORTS","sourceRef":"main-file","targetRef":"math-file","confidence":1,"evidence":{"filePath":"src/main.js","startLine":1,"startColumn":1,"endLine":1,"endColumn":33,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"CONTAINS","sourceRef":"main-file","targetRef":"total","confidence":1,"evidence":{"filePath":"src/main.js","startLine":2,"startColumn":1,"endLine":2,"endColumn":32,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"main-file","targetRef":"total","confidence":1,"evidence":{"filePath":"src/main.js","startLine":2,"startColumn":1,"endLine":2,"endColumn":32,"kind":"SYNTAX"}},
     {"edgeType":"CALLS","sourceRef":"total","targetRef":"add","confidence":1,"evidence":{"filePath":"src/main.js","startLine":2,"startColumn":22,"endLine":2,"endColumn":31,"kind":"STATIC_RESOLUTION"}}
   ],
-  "unresolvedRelationships":[],"expectedDiagnosticCodes":[]
+  "unresolvedRelationships": [],
+  "expectedDiagnosticCodes": []
 }

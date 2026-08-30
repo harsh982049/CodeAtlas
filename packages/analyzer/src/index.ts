@@ -3,4 +3,7 @@ export * from "./analyzer-diagnostic.js";
 export * from "./analyzer-input.js";
 export * from "./analyzer-result.js";
 export * from "./language-analyzer.js";
+export * from "./local-input.js";
+export * from "./source-revision.js";
+export * from "./typescript-javascript-analyzer.js";
 export * from "./unresolved-relationship.js";

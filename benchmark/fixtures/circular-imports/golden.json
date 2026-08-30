@@ -1,14 +1,28 @@
 {
-  "schemaVersion":1,"fixture":"circular-imports",
-  "entities":[
-    {"ref":"a","identity":{"identityKind":"NAMED","filePath":"src/a.ts","kind":"FILE","qualifiedName":"src/a.ts"},"name":"a.ts","exported":false},
-    {"ref":"b","identity":{"identityKind":"NAMED","filePath":"src/b.ts","kind":"FILE","qualifiedName":"src/b.ts"},"name":"b.ts","exported":false},
-    {"ref":"c","identity":{"identityKind":"NAMED","filePath":"src/c.ts","kind":"FILE","qualifiedName":"src/c.ts"},"name":"c.ts","exported":false}
+  "schemaVersion": 1,
+  "fixture": "circular-imports",
+  "entities": [
+    {"ref":"a-file","identity":{"identityKind":"NAMED","filePath":"src/a.ts","kind":"FILE","qualifiedName":"src/a.ts"},"name":"a.ts","exported":false},
+    {"ref":"a","identity":{"identityKind":"NAMED","filePath":"src/a.ts","kind":"FUNCTION","qualifiedName":"a"},"name":"a","exported":true},
+    {"ref":"b-file","identity":{"identityKind":"NAMED","filePath":"src/b.ts","kind":"FILE","qualifiedName":"src/b.ts"},"name":"b.ts","exported":false},
+    {"ref":"b","identity":{"identityKind":"NAMED","filePath":"src/b.ts","kind":"FUNCTION","qualifiedName":"b"},"name":"b","exported":true},
+    {"ref":"c-file","identity":{"identityKind":"NAMED","filePath":"src/c.ts","kind":"FILE","qualifiedName":"src/c.ts"},"name":"c.ts","exported":false},
+    {"ref":"c","identity":{"identityKind":"NAMED","filePath":"src/c.ts","kind":"FUNCTION","qualifiedName":"c"},"name":"c","exported":true}
   ],
-  "edges":[
-    {"edgeType":"IMPORTS","sourceRef":"a","targetRef":"b","confidence":1,"evidence":{"filePath":"src/a.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":28,"kind":"STATIC_RESOLUTION"}},
-    {"edgeType":"IMPORTS","sourceRef":"b","targetRef":"c","confidence":1,"evidence":{"filePath":"src/b.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":28,"kind":"STATIC_RESOLUTION"}},
-    {"edgeType":"IMPORTS","sourceRef":"c","targetRef":"a","confidence":1,"evidence":{"filePath":"src/c.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":28,"kind":"STATIC_RESOLUTION"}}
+  "edges": [
+    {"edgeType":"IMPORTS","sourceRef":"a-file","targetRef":"b-file","confidence":1,"evidence":{"filePath":"src/a.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":28,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"CONTAINS","sourceRef":"a-file","targetRef":"a","confidence":1,"evidence":{"filePath":"src/a.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":26,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"a-file","targetRef":"a","confidence":1,"evidence":{"filePath":"src/a.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":26,"kind":"SYNTAX"}},
+    {"edgeType":"REFERENCES","sourceRef":"a","targetRef":"b","confidence":1,"evidence":{"filePath":"src/a.ts","startLine":2,"startColumn":24,"endLine":2,"endColumn":25,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"IMPORTS","sourceRef":"b-file","targetRef":"c-file","confidence":1,"evidence":{"filePath":"src/b.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":28,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"CONTAINS","sourceRef":"b-file","targetRef":"b","confidence":1,"evidence":{"filePath":"src/b.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":26,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"b-file","targetRef":"b","confidence":1,"evidence":{"filePath":"src/b.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":26,"kind":"SYNTAX"}},
+    {"edgeType":"REFERENCES","sourceRef":"b","targetRef":"c","confidence":1,"evidence":{"filePath":"src/b.ts","startLine":2,"startColumn":24,"endLine":2,"endColumn":25,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"IMPORTS","sourceRef":"c-file","targetRef":"a-file","confidence":1,"evidence":{"filePath":"src/c.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":28,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"CONTAINS","sourceRef":"c-file","targetRef":"c","confidence":1,"evidence":{"filePath":"src/c.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":26,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"c-file","targetRef":"c","confidence":1,"evidence":{"filePath":"src/c.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":26,"kind":"SYNTAX"}},
+    {"edgeType":"REFERENCES","sourceRef":"c","targetRef":"a","confidence":1,"evidence":{"filePath":"src/c.ts","startLine":2,"startColumn":24,"endLine":2,"endColumn":25,"kind":"STATIC_RESOLUTION"}}
   ],
-  "unresolvedRelationships":[],"expectedDiagnosticCodes":[]
+  "unresolvedRelationships": [],
+  "expectedDiagnosticCodes": []
 }

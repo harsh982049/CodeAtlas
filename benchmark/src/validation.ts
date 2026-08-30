@@ -50,6 +50,9 @@ interface UnknownRecord {
   readonly qualifiedName?: unknown;
   readonly ecosystem?: unknown;
   readonly packageName?: unknown;
+  readonly lexicalParentRef?: unknown;
+  readonly syntacticRole?: unknown;
+  readonly localStructuralText?: unknown;
   readonly exported?: unknown;
   readonly edgeType?: unknown;
   readonly intendedEdgeType?: unknown;
@@ -127,6 +130,16 @@ function entity(value: unknown, label: string): GoldenEntity {
       identityKind,
       ecosystem,
       packageName: string(identity.packageName, `${label}.identity.packageName`),
+    };
+  } else if (identityKind === "ANONYMOUS") {
+    if (identity.kind !== "FUNCTION") throw new TypeError(`${label}.identity.kind must be FUNCTION`);
+    parsedIdentity = {
+      identityKind,
+      filePath: string(identity.filePath, `${label}.identity.filePath`),
+      kind: "FUNCTION",
+      lexicalParentRef: string(identity.lexicalParentRef, `${label}.identity.lexicalParentRef`),
+      syntacticRole: string(identity.syntacticRole, `${label}.identity.syntacticRole`),
+      localStructuralText: string(identity.localStructuralText, `${label}.identity.localStructuralText`),
     };
   } else {
     throw new TypeError(`${label}.identity.identityKind is invalid`);
@@ -207,6 +220,11 @@ export function parseGoldenGraph(value: unknown): GoldenGraph {
   if (refs.size !== parsed.entities.length) throw new Error("Golden entity refs must be unique");
   for (const item of parsed.edges) {
     if (!refs.has(item.sourceRef) || !refs.has(item.targetRef)) throw new Error(`Edge references an unknown entity: ${item.sourceRef} -> ${item.targetRef}`);
+  }
+  for (const item of parsed.entities) {
+    if (item.identity.identityKind === "ANONYMOUS" && !refs.has(item.identity.lexicalParentRef)) {
+      throw new Error(`Anonymous entity references unknown lexical parent: ${item.identity.lexicalParentRef}`);
+    }
   }
   for (const item of parsed.unresolvedRelationships) {
     if (item.sourceRef !== null && !refs.has(item.sourceRef)) throw new Error(`Unresolved relationship references unknown source: ${item.sourceRef}`);

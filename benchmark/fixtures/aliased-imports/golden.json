@@ -8,8 +8,10 @@
   ],
   "edges":[
     {"edgeType":"CONTAINS","sourceRef":"payments-file","targetRef":"charge","confidence":1,"evidence":{"filePath":"src/payments.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":55,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"payments-file","targetRef":"charge","confidence":1,"evidence":{"filePath":"src/payments.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":55,"kind":"SYNTAX"}},
     {"edgeType":"IMPORTS","sourceRef":"checkout-file","targetRef":"payments-file","confidence":1,"evidence":{"filePath":"src/checkout.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":60,"kind":"STATIC_RESOLUTION"}},
     {"edgeType":"CONTAINS","sourceRef":"checkout-file","targetRef":"checkout","confidence":1,"evidence":{"filePath":"src/checkout.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":70,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"checkout-file","targetRef":"checkout","confidence":1,"evidence":{"filePath":"src/checkout.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":70,"kind":"SYNTAX"}},
     {"edgeType":"CALLS","sourceRef":"checkout","targetRef":"charge","confidence":1,"evidence":{"filePath":"src/checkout.ts","startLine":2,"startColumn":45,"endLine":2,"endColumn":61,"kind":"STATIC_RESOLUTION"}}
   ],
   "unresolvedRelationships":[],"expectedDiagnosticCodes":[]

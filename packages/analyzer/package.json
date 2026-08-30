@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@codeatlas/codegraph": "workspace:*",
-    "@codeatlas/shared": "workspace:*"
+    "@codeatlas/shared": "workspace:*",
+    "typescript": "6.0.3"
   }
 }

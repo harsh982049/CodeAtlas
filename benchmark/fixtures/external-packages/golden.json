@@ -1,0 +1,16 @@
+{
+  "schemaVersion":1,"fixture":"external-packages",
+  "entities":[
+    {"ref":"file","identity":{"identityKind":"NAMED","filePath":"src/imports.ts","kind":"FILE","qualifiedName":"src/imports.ts"},"name":"imports.ts","exported":false},
+    {"ref":"express","identity":{"identityKind":"EXTERNAL_PACKAGE","ecosystem":"NPM","packageName":"express"},"name":"express","exported":false},
+    {"ref":"lodash","identity":{"identityKind":"EXTERNAL_PACKAGE","ecosystem":"NPM","packageName":"lodash"},"name":"lodash","exported":false},
+    {"ref":"acme","identity":{"identityKind":"EXTERNAL_PACKAGE","ecosystem":"NPM","packageName":"@acme/payments"},"name":"@acme/payments","exported":false},
+    {"ref":"node-fs","identity":{"identityKind":"EXTERNAL_PACKAGE","ecosystem":"NODE_BUILTIN","packageName":"node:fs"},"name":"node:fs","exported":false}
+  ],
+  "edges":[
+    {"edgeType":"IMPORTS","sourceRef":"file","targetRef":"express","confidence":1,"evidence":{"filePath":"src/imports.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":31,"kind":"SYNTAX"}},
+    {"edgeType":"IMPORTS","sourceRef":"file","targetRef":"lodash","confidence":1,"evidence":{"filePath":"src/imports.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":28,"kind":"SYNTAX"}},
+    {"edgeType":"IMPORTS","sourceRef":"file","targetRef":"acme","confidence":1,"evidence":{"filePath":"src/imports.ts","startLine":3,"startColumn":1,"endLine":3,"endColumn":45,"kind":"SYNTAX"}},
+    {"edgeType":"IMPORTS","sourceRef":"file","targetRef":"node-fs","confidence":1,"evidence":{"filePath":"src/imports.ts","startLine":4,"startColumn":1,"endLine":4,"endColumn":26,"kind":"SYNTAX"}}
+  ],"unresolvedRelationships":[],"expectedDiagnosticCodes":[]
+}

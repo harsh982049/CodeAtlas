@@ -1,6 +1,8 @@
 import {
   createCodeEdge,
+  createAnonymousEntityIdentity,
   createExternalPackageEntityIdentity,
+  createLocalStructuralFingerprint,
   createNamedEntityIdentity,
   InMemoryCodeGraph,
   type CodeEntity,
@@ -9,7 +11,7 @@ import { normalizeRelativePath } from "@codeatlas/shared";
 
 import type { GoldenEntity, GoldenGraph } from "./schema.js";
 
-function materializeEntity(golden: GoldenEntity): CodeEntity {
+function materializeEntity(golden: GoldenEntity, byRef: ReadonlyMap<string, CodeEntity>): CodeEntity {
   if (golden.identity.identityKind === "EXTERNAL_PACKAGE") {
     const identity = createExternalPackageEntityIdentity(golden.identity.ecosystem, golden.identity.packageName);
     return {
@@ -26,6 +28,33 @@ function materializeEntity(golden: GoldenEntity): CodeEntity {
       identityStability: "HIGH",
       analyzer: { name: "golden-fixture", version: "1" },
       metadata: { ecosystem: golden.identity.ecosystem },
+    };
+  }
+  if (golden.identity.identityKind === "ANONYMOUS") {
+    const lexicalParent = byRef.get(golden.identity.lexicalParentRef);
+    if (lexicalParent === undefined) throw new Error(`Anonymous lexical parent must precede ${golden.ref}`);
+    const filePath = normalizeRelativePath(golden.identity.filePath);
+    const identity = createAnonymousEntityIdentity({
+      filePath,
+      kind: "FUNCTION",
+      lexicalParent: lexicalParent.stableKey,
+      syntacticRole: golden.identity.syntacticRole,
+      localStructuralFingerprint: createLocalStructuralFingerprint(golden.identity.localStructuralText),
+    });
+    return {
+      ...identity,
+      kind: "FUNCTION",
+      name: golden.name,
+      qualifiedName: `${lexicalParent.qualifiedName}.<anonymous:${golden.identity.syntacticRole}>`,
+      filePath,
+      sourceRange: null,
+      exported: golden.exported,
+      defaultExport: false,
+      declarationFingerprint: null,
+      implementationFingerprint: null,
+      identityStability: "LOW",
+      analyzer: { name: "golden-fixture", version: "1" },
+      metadata: { lexicalParent: lexicalParent.stableKey, syntacticRole: golden.identity.syntacticRole },
     };
   }
   const identity = createNamedEntityIdentity(golden.identity);
@@ -50,7 +79,7 @@ export function materializeGoldenGraph(golden: GoldenGraph): InMemoryCodeGraph {
   const graph = new InMemoryCodeGraph();
   const byRef = new Map<string, CodeEntity>();
   for (const expected of golden.entities) {
-    const entity = materializeEntity(expected);
+    const entity = materializeEntity(expected, byRef);
     graph.addEntity(entity);
     byRef.set(expected.ref, entity);
   }

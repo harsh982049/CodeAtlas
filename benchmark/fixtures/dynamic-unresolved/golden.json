@@ -1,12 +1,17 @@
 {
-  "schemaVersion":1,"fixture":"dynamic-unresolved",
-  "entities":[
+  "schemaVersion": 1,
+  "fixture": "dynamic-unresolved",
+  "entities": [
+    {"ref":"file","identity":{"identityKind":"NAMED","filePath":"src/dynamic.js","kind":"FILE","qualifiedName":"src/dynamic.js"},"name":"dynamic.js","exported":false},
     {"ref":"load-plugin","identity":{"identityKind":"NAMED","filePath":"src/dynamic.js","kind":"FUNCTION","qualifiedName":"loadPlugin"},"name":"loadPlugin","exported":true}
   ],
-  "edges":[],
-  "unresolvedRelationships":[
+  "edges": [
+    {"edgeType":"CONTAINS","sourceRef":"file","targetRef":"load-plugin","confidence":1,"evidence":{"filePath":"src/dynamic.js","startLine":1,"startColumn":1,"endLine":4,"endColumn":2,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"file","targetRef":"load-plugin","confidence":1,"evidence":{"filePath":"src/dynamic.js","startLine":1,"startColumn":1,"endLine":4,"endColumn":2,"kind":"SYNTAX"}}
+  ],
+  "unresolvedRelationships": [
     {"sourceRef":"load-plugin","intendedEdgeType":"IMPORTS","targetText":"./plugins/${name}.js","reason":"COMPUTED_SPECIFIER","evidence":{"filePath":"src/dynamic.js","startLine":2,"startColumn":24,"endLine":2,"endColumn":55,"kind":"SYNTAX"}},
     {"sourceRef":"load-plugin","intendedEdgeType":"POSSIBLE_CALL","targetText":"plugin.run","reason":"DYNAMIC_DISPATCH","evidence":{"filePath":"src/dynamic.js","startLine":3,"startColumn":10,"endLine":3,"endColumn":22,"kind":"SYNTAX"}}
   ],
-  "expectedDiagnosticCodes":[]
+  "expectedDiagnosticCodes": []
 }

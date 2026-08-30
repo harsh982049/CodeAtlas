@@ -3,6 +3,8 @@ import type {
   NormalizedRelativePath,
 } from "@codeatlas/shared";
 
+import type { SourceRevision } from "./source-revision.js";
+
 export interface AnalysisLimits {
   readonly maxFiles: number;
   readonly maxFileBytes: number;
@@ -10,7 +12,8 @@ export interface AnalysisLimits {
 }
 
 export interface AnalyzerInput {
-  readonly snapshot: AnalysisSnapshotIdentity;
+  readonly snapshot: AnalysisSnapshotIdentity | null;
+  readonly revision: SourceRevision;
   readonly repositoryRoot: string;
   readonly projectHints: readonly NormalizedRelativePath[];
   readonly limits: AnalysisLimits;
@@ -23,6 +26,11 @@ export function assertAnalyzerInput(input: AnalyzerInput): void {
   for (const [label, value] of Object.entries(input.limits)) {
     if (!Number.isSafeInteger(value) || value <= 0) {
       throw new RangeError(`${label} must be a positive safe integer`);
+    }
+  }
+  if (input.snapshot !== null) {
+    if (input.revision.kind !== "GIT" || input.snapshot.commitSha !== input.revision.sha) {
+      throw new Error("A persisted snapshot requires a matching exact Git revision");
     }
   }
 }

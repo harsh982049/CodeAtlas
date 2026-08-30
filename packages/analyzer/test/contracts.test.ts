@@ -9,6 +9,8 @@ import { describe, expect, expectTypeOf, it } from "vitest";
 import {
   assertAnalysisStats,
   assertAnalyzerInput,
+  createContentSourceRevision,
+  createGitSourceRevision,
   type AnalyzerInput,
   type AnalyzerResult,
   type LanguageAnalyzer,
@@ -20,6 +22,7 @@ const input: AnalyzerInput = {
     commitSha: createCommitSha("a".repeat(40)),
     analyzerVersion: createAnalyzerVersion("contracts-v1"),
   },
+  revision: createGitSourceRevision("a".repeat(40)),
   repositoryRoot: "/fixtures/typescript-basic",
   projectHints: [],
   limits: { maxFiles: 100, maxFileBytes: 1_000_000, timeoutMilliseconds: 30_000 },
@@ -29,6 +32,9 @@ describe("analyzer contracts", () => {
   it("accepts a bounded, snapshot-specific analyzer input", () => {
     expect(() => assertAnalyzerInput(input)).not.toThrow();
     expect(() => assertAnalyzerInput({ ...input, limits: { ...input.limits, maxFiles: 0 } })).toThrow();
+    const contentRevision = createContentSourceRevision([]);
+    expect(() => assertAnalyzerInput({ ...input, snapshot: null, revision: contentRevision })).not.toThrow();
+    expect(() => assertAnalyzerInput({ ...input, revision: contentRevision })).toThrow(/persisted snapshot/u);
   });
 
   it("rejects internally inconsistent statistics", () => {

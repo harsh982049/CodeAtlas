@@ -1,40 +1,26 @@
 # CodeAtlas
 
-CodeAtlas is intended to turn a JavaScript/TypeScript repository into an accurate, typed, and explainable structural code graph. The repository is currently at **Milestone 1: contracts, golden fixtures, and benchmark foundation**.
+CodeAtlas turns JavaScript and TypeScript repositories into a typed, explainable structural code graph. The repository is at **Milestone 2: in-memory JavaScript/TypeScript analyzer**. It now discovers projects, parses source with the TypeScript Compiler API, resolves deterministic relationships with `TypeChecker`, and measures its output against frozen human-authored fixtures.
 
-There is no web application, API server, database, or repository-analysis CLI yet. Milestone 1 is run through its validation and test commands. Its purpose is to define what the future analyzer must produce before implementing that analyzer.
+The product design is in [docs/CODEATLAS_V1_SPEC.md](./docs/CODEATLAS_V1_SPEC.md). See [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the system overview, [docs/CODE_GRAPH_CONTRACT.md](./docs/CODE_GRAPH_CONTRACT.md) for graph semantics, [docs/ANALYZER.md](./docs/ANALYZER.md) for the analyzer architecture and implementation, and [docs/BENCHMARKS.md](./docs/BENCHMARKS.md) for evaluation.
 
-For the complete product design, read [the V1 specification](./docs/CODEATLAS_V1_SPEC.md). The shorter architecture entry point is [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
+## Implemented
 
-## What Milestone 1 implements
+- Safe, bounded repository and TypeScript/JavaScript project discovery.
+- Configured and inferred TypeScript `Program` construction without loading repository dependencies.
+- `FILE`, workspace `MODULE`, function/component, class/member, interface, type, enum, variable, and external-package entities.
+- `CONTAINS`, `IMPORTS`, `EXPORTS`, `CALLS`, `REFERENCES`, `EXTENDS`, `IMPLEMENTS`, `INSTANTIATES`, and workspace `DEPENDS_ON` edges.
+- ESM aliases and re-exports, static CommonJS patterns, path aliases, workspace imports, TSX component heuristics, syntax-error recovery, and explicit unresolved dynamic evidence.
+- Stable keys plus separate declaration and implementation fingerprints.
+- Deterministic local source revisions, edge evidence/confidence/provenance, graph validation, and JSON export.
+- Eighteen frozen synthetic fixtures with contract and analyzer benchmarks.
 
-- Stable logical entity identities that exclude declaration signatures.
-- Separate declaration and implementation fingerprints.
-- Typed code entities and directed structural edges.
-- Edge provenance, evidence locations, and numeric analyzer confidence.
-- In-memory graph insertion, validation, adjacency queries, bounded traversal, and deterministic serialization.
-- Contracts for analyzer input, results, statistics, diagnostics, and unresolved relationships.
-- Separate structural snapshot and embedding-index identity types.
-- npm, scoped-package, and Node built-in specifier normalization.
-- Thirteen small JavaScript/TypeScript fixture repositories.
-- Hand-authored golden graphs describing the expected entities and relationships.
-- Precision, recall, and F1 comparison utilities for future analyzer output.
+Analyzed repository code is never executed. CodeAtlas does not run repository scripts and does not install repository dependencies. Missing `node_modules` intentionally reduces third-party type resolution; imports still become external-package entities.
 
-The detailed graph rules are in [docs/CODE_GRAPH_CONTRACT.md](./docs/CODE_GRAPH_CONTRACT.md). Fixture and scoring methodology are in [docs/BENCHMARKS.md](./docs/BENCHMARKS.md).
-
-## Prerequisites
+## Prerequisites and install
 
 - Node.js 22.13.0 or newer.
-- pnpm 11.24.0. The intended pnpm version is recorded in `package.json`.
-
-If pnpm is not already available, a recent Node installation can activate the declared version through Corepack:
-
-```bash
-corepack enable
-corepack install
-```
-
-## Install
+- pnpm 11.24.0 (declared in `package.json`).
 
 From the repository root:
 
@@ -42,75 +28,51 @@ From the repository root:
 pnpm install
 ```
 
-Dependencies are pinned in `package.json` and `pnpm-lock.yaml`. This command installs CodeAtlas development dependencies only. Do not run installation commands inside `benchmark/fixtures`; fixture repositories are untrusted test data and are never executed.
+This installs CodeAtlas development dependencies only. Never install dependencies inside benchmark fixtures.
 
-## Run the Milestone 1 checks
+## Analyze a repository
 
-Run the complete test suite:
+Print a developer-friendly analysis summary:
 
 ```bash
-pnpm test
+pnpm codeatlas analyze ./benchmark/fixtures/typescript-basic
 ```
 
-Run static type checking:
+Export the revision, deterministic entity/edge arrays, statistics, diagnostics, and unresolved relationships as JSON:
+
+```bash
+pnpm codeatlas analyze ./benchmark/fixtures/typescript-basic --output graph.json
+```
+
+The same command accepts an absolute or relative path to another local JavaScript/TypeScript repository. A Git repository uses its readable exact HEAD as the debug source revision; another directory receives a deterministic content revision.
+
+## Validate Milestone 2
+
+Run all quality gates individually:
 
 ```bash
 pnpm typecheck
-```
-
-Run linting:
-
-```bash
 pnpm lint
-```
-
-Validate all fixture manifests and golden graphs, exercise graph validation, and test the graph-comparison metrics:
-
-```bash
+pnpm test
 pnpm benchmark:contracts
+pnpm benchmark:analyzer
 ```
 
-For a full local acceptance pass, run all four commands. A passing `benchmark:contracts` result means the benchmark contracts are internally valid; it is **not** a claim about analyzer accuracy because no source analyzer exists yet.
+`benchmark:contracts` validates fixture manifests, frozen golden graphs, evidence bounds, and graph domains without running the analyzer. `benchmark:analyzer` analyzes every fixture and compares actual entities, edges, unresolved relationships, and diagnostics against those goldens, reporting per-fixture and aggregate precision, recall, and F1.
 
-## Where to look
+## Repository layout
 
 ```text
-packages/shared/       Shared value types, paths, locations, and confidence vocabulary
-packages/codegraph/    Entity, edge, identity, fingerprint, graph, and serialization logic
-packages/analyzer/     Language-neutral analyzer interfaces only
-benchmark/fixtures/    Tiny source repositories and their golden graphs
-benchmark/src/         Fixture validation, materialization, and comparison utilities
-benchmark/test/        Controlled benchmark contract tests
-docs/                  Specification, architecture, ADRs, and contract documentation
+packages/shared/       Paths, locations, snapshot identities, confidence, and JSON contracts
+packages/codegraph/    Entities, edges, identities, fingerprints, graph storage, and serialization
+packages/analyzer/     Compiler frontend, safe discovery, resolution, CLI, diagnostics, and revisions
+benchmark/fixtures/    Small source repositories and frozen human-authored golden graphs
+benchmark/src/         Contract validation and analyzer benchmark evaluator
+docs/                  Specification, architecture, analyzer/graph contracts, benchmarks, and ADRs
 ```
 
-Useful starting points:
+## Current limitations and next step
 
-- `packages/codegraph/src/entity.ts` — canonical entity model.
-- `packages/codegraph/src/edge.ts` — canonical edge model and occurrence identity.
-- `packages/codegraph/src/graph.ts` — in-memory graph behavior.
-- `packages/analyzer/src/language-analyzer.ts` — boundary the next analyzer must implement.
-- `benchmark/fixtures/typescript-basic/golden.json` — an example expected graph.
-- `benchmark/src/comparison.ts` — entity/edge precision, recall, and F1 evaluation.
+Milestone 2 is intentionally in-memory and structural. It has no database, API, UI, GitHub integration, semantic retrieval, LLM, impact analysis, or incremental indexing. It does not claim complete dynamic JavaScript dispatch, runtime React rendering, anonymous callback identity, installed dependency internals, or framework route/test inference.
 
-## What is intentionally unavailable
-
-There is currently no `pnpm dev` command and no command such as:
-
-```text
-codeatlas analyze <repository>
-```
-
-Those would imply application and analyzer functionality outside Milestone 1. PostgreSQL, object storage, queues, GitHub integration, embeddings, LLM features, impact analysis, and UI code are also intentionally absent.
-
-## Recommended next steps
-
-The next milestone should implement the first in-memory JavaScript/TypeScript analyzer against the contracts and goldens already present:
-
-1. Discover repository-contained `tsconfig.json` and `jsconfig.json` projects and source files without installing dependencies or executing repository code.
-2. Construct TypeScript `Program` instances and use the TypeScript Compiler API and `TypeChecker` to extract named entities, declaration/implementation fingerprint inputs, imports, exports, containment, inheritance, construction, references, and statically resolved calls.
-3. Emit diagnostics and first-class unresolved relationships instead of inventing edges for dynamic or ambiguous code.
-4. Run analyzer output against the 13 golden fixtures and report entity/edge precision, recall, and F1. Add focused fixtures for every discovered bug.
-5. Harden JavaScript, CommonJS, re-export, monorepo, malformed-source, and TSX behavior until the benchmark is credible.
-
-Only after the in-memory analyzer produces useful benchmark results should CodeAtlas proceed to PostgreSQL-backed immutable snapshots, followed by a thin graph explorer. Semantic retrieval, grounded Q&A, Git intelligence, impact analysis, diffs, incremental indexing, and full GitHub/deployment work come later in the roadmap.
+The next milestone is code-graph hardening on larger pinned repositories: expand project-reference/package-export coverage, strengthen overload and anonymous-callable behavior, add adversarial resource-limit cases, and validate memory/accuracy before PostgreSQL immutable snapshot persistence.

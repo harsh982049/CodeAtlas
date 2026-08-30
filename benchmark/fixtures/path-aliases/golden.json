@@ -1,0 +1,17 @@
+{
+  "schemaVersion":1,"fixture":"path-aliases",
+  "entities":[
+    {"ref":"foo-file","identity":{"identityKind":"NAMED","filePath":"src/services/foo.ts","kind":"FILE","qualifiedName":"src/services/foo.ts"},"name":"foo.ts","exported":false},
+    {"ref":"foo","identity":{"identityKind":"NAMED","filePath":"src/services/foo.ts","kind":"FUNCTION","qualifiedName":"foo"},"name":"foo","exported":true},
+    {"ref":"main-file","identity":{"identityKind":"NAMED","filePath":"src/main.ts","kind":"FILE","qualifiedName":"src/main.ts"},"name":"main.ts","exported":false},
+    {"ref":"result","identity":{"identityKind":"NAMED","filePath":"src/main.ts","kind":"VARIABLE","qualifiedName":"result"},"name":"result","exported":true}
+  ],
+  "edges":[
+    {"edgeType":"CONTAINS","sourceRef":"foo-file","targetRef":"foo","confidence":1,"evidence":{"filePath":"src/services/foo.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":48,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"foo-file","targetRef":"foo","confidence":1,"evidence":{"filePath":"src/services/foo.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":48,"kind":"SYNTAX"}},
+    {"edgeType":"IMPORTS","sourceRef":"main-file","targetRef":"foo-file","confidence":1,"evidence":{"filePath":"src/main.ts","startLine":1,"startColumn":1,"endLine":1,"endColumn":39,"kind":"STATIC_RESOLUTION"}},
+    {"edgeType":"CONTAINS","sourceRef":"main-file","targetRef":"result","confidence":1,"evidence":{"filePath":"src/main.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":29,"kind":"SYNTAX"}},
+    {"edgeType":"EXPORTS","sourceRef":"main-file","targetRef":"result","confidence":1,"evidence":{"filePath":"src/main.ts","startLine":2,"startColumn":1,"endLine":2,"endColumn":29,"kind":"SYNTAX"}},
+    {"edgeType":"CALLS","sourceRef":"result","targetRef":"foo","confidence":1,"evidence":{"filePath":"src/main.ts","startLine":2,"startColumn":23,"endLine":2,"endColumn":28,"kind":"STATIC_RESOLUTION"}}
+  ],"unresolvedRelationships":[],"expectedDiagnosticCodes":[]
+}
