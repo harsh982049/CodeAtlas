@@ -9,7 +9,9 @@ Temporary clones must be deleted after indexing, but source viewing and citation
 
 ## Decision
 
-PostgreSQL is authoritative for metadata, authorization, index state, entities, relationships, and history metadata. MinIO locally and S3 in production are authoritative for retained snapshot-scoped source blobs. Each `files` record stores the object key and content hash.
+PostgreSQL is authoritative for metadata, authorization, index state, entities, relationships, and history metadata. MinIO locally and S3 in production are authoritative for retained exact source bytes. Each snapshot-scoped `files` record stores the object key and content hash.
+
+ADR 008 supersedes only the earlier snapshot-scoped object-key layout: immutable blobs are globally content-addressed and can be shared across repositories and snapshots. Snapshot membership, authorization, retention references, and source metadata remain authoritative in PostgreSQL.
 
 The authorized source API verifies user → GitHub App installation → repository access, retrieves the object, validates its hash, and returns only authorized content. Browser clients never receive object-store credentials. Source retention follows snapshot retention, and repository deletion removes or schedules removal of all retained blobs.
 
@@ -22,7 +24,7 @@ Private repositories require explicit per-repository opt-in before source-derive
 ## Consequences
 
 - Object storage is mandatory in local and production deployments.
-- Cleanup must be durable, retryable, and auditable across database and object storage boundaries.
+- Cleanup must be durable, retryable, reference-aware, and auditable across database and object storage boundaries.
 - Redaction lowers disclosure risk but cannot guarantee discovery of every secret; this remains a documented limitation.
 - Semantic search and generated explanations may be unavailable for a private repository that has not opted in.
 - Consent, provider purpose, and revocation require durable metadata and authorization tests.

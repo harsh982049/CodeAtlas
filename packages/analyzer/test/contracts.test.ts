@@ -1,8 +1,8 @@
 import { InMemoryCodeGraph } from "@codeatlas/codegraph";
 import {
-  createAnalyzerVersion,
   createCommitSha,
   createRepositoryIdentifier,
+  createStructuralAnalyzerIdentity,
 } from "@codeatlas/shared";
 import { describe, expect, expectTypeOf, it } from "vitest";
 
@@ -20,7 +20,7 @@ const input: AnalyzerInput = {
   snapshot: {
     repositoryId: createRepositoryIdentifier("fixture/typescript-basic"),
     commitSha: createCommitSha("a".repeat(40)),
-    analyzerVersion: createAnalyzerVersion("contracts-v1"),
+    analyzer: createStructuralAnalyzerIdentity("contract-analyzer", "contracts-v1"),
   },
   revision: createGitSourceRevision("a".repeat(40)),
   repositoryRoot: "/fixtures/typescript-basic",
@@ -77,6 +77,7 @@ describe("analyzer contracts", () => {
       },
       diagnostics: [],
       unresolvedRelationships: [],
+      sourceArtifacts: [],
       telemetry: {
         phases: [],
         peakRssBytes: 0,

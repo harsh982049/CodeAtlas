@@ -1,6 +1,6 @@
 # JavaScript/TypeScript analyzer
 
-Milestone 3 hardens the read-only, in-memory JavaScript/TypeScript frontend in `packages/analyzer`. It produces the graph contract defined in [CODE_GRAPH_CONTRACT.md](./CODE_GRAPH_CONTRACT.md) and has no database, network, benchmark-ground-truth, or application dependency.
+Milestone 3 hardened the read-only, in-memory JavaScript/TypeScript frontend in `packages/analyzer`; Milestone 4 extends its result with exact, storage-neutral source artifacts. It produces the graph contract defined in [CODE_GRAPH_CONTRACT.md](./CODE_GRAPH_CONTRACT.md) and has no database, network, benchmark-ground-truth, object-storage, or application dependency.
 
 ## Security and repository discovery
 
@@ -30,7 +30,11 @@ Stable identity excludes callable signatures. Declaration and implementation tok
 
 Source locations are half-open `[start, end)`. TypeScript's zero-based offset-to-line/column conversion adds one to both line and column, preserving CodeAtlas's one-based line and one-based column contract. Every emitted edge includes analyzer/resolver provenance, confidence, and source evidence when available.
 
-Production `AnalysisSnapshotIdentity` remains repository + exact Git commit SHA + analyzer version. `SourceRevision` is separate: local analysis uses a real `GIT` HEAD when it can read one safely, otherwise a `CONTENT` SHA-256 over sorted normalized relative paths and their content hashes. Content revisions contain no absolute paths, timestamps, or machine data and never masquerade as commit SHAs.
+Production `AnalysisSnapshotIdentity` is repository + exact Git commit SHA + structural analyzer name + structural analyzer version. `SourceRevision` is separate: local analysis uses a real `GIT` HEAD when it can read one safely, otherwise a `CONTENT` SHA-256 over sorted normalized relative paths and their content hashes. Content revisions contain no absolute paths, timestamps, or machine data and never masquerade as commit SHAs. Persistence accepts only an exact matching Git revision; CONTENT revisions remain debug/analyzer-only.
+
+Discovery reads accepted files once as raw bytes. SHA-256 is calculated over those original bytes and the same buffer is decoded for compiler analysis. `AnalyzerResult.sourceArtifacts` returns normalized path, `SOURCE` or `PROJECT_CONFIGURATION` role, format, exact bytes, content hash, byte count, and line count. Material configuration files discovered for analysis—such as TypeScript/JavaScript project configs, package descriptors, and workspace configs—are retained alongside source files. These values contain no PostgreSQL, MinIO, S3, bucket, or object-key concepts. Ordinary graph serialization deliberately excludes bytes.
+
+The Milestone 4 indexer deduplicates equal-hash artifacts without copying buffers and releases its result/artifact references after source and structural persistence. Memory regression was measured with identical analyzer code and pinned inputs before and after the artifact extension. On this development host, pnpm increased from 1,625.5 MiB to 1,667.7 MiB peak RSS (+42.2 MiB, +2.6%); TypeScript increased from 1,453.7 MiB to 1,559.6 MiB (+105.9 MiB, +7.3%). Entity, edge, file, line, and assertion results were unchanged. The increase was bounded enough that a disk spool was not introduced; future larger-repository measurements may still justify one.
 
 A malformed file emits `TS_PARSE_ERROR` and `MALFORMED_SOURCE`, contributes no trusted entities, and does not prevent valid files from producing a graph. Computed imports and unresolved dynamic dispatch produce first-class unresolved relationships instead of speculative edges. Diagnostics, unresolved relationships, and counters are returned beside partial graph output.
 
@@ -43,4 +47,4 @@ The CLI emits the graph statistics and telemetry plus a deterministic summary: e
 - Generic dynamic dispatch, computed imports, decorators, mixins, framework routes, test-subject inference, and runtime React behavior remain conservative or unresolved.
 - Conditional package exports are a conservative source resolver, not a complete Node/package-manager runtime implementation; generated layouts without a deterministic retained-source mapping remain unresolved.
 - Explicit project-root overlap is diagnosed, while shared transitive dependencies are expected and are not treated as ownership conflicts.
-- Analysis remains in-memory; immutable PostgreSQL snapshot publication is the next milestone.
+- Analysis remains in-memory and storage-neutral even though Milestone 4 can persist its result through separate database, storage, and indexer packages.

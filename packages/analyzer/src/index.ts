@@ -8,5 +8,6 @@ export * from "./language-analyzer.js";
 export * from "./local-input.js";
 export * from "./graph-summary.js";
 export * from "./source-revision.js";
+export * from "./source-artifact.js";
 export * from "./typescript-javascript-analyzer.js";
 export * from "./unresolved-relationship.js";

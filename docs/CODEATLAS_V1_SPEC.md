@@ -1161,6 +1161,7 @@ repository_id
 
 commit_sha
 
+analyzer_name
 analyzer_version
 indexed_at
 state
@@ -1173,6 +1174,7 @@ An analysis snapshot is uniquely identified by:
 ```text
 repository_id
 commit_sha
+analyzer_name
 analyzer_version
 ```
 
@@ -1184,11 +1186,11 @@ READY
 FAILED
 ```
 
-Readers never see `BUILDING` snapshots. Publishing is a single atomic database transaction that marks the completed snapshot `READY` and updates `repositories.current_snapshot_id`. A failed build is marked `FAILED` and never becomes current.
+Readers never see `BUILDING` snapshots. Publishing is a single atomic database transaction that marks the completed snapshot `READY` and updates `repositories.current_snapshot_id`. A failed build is marked `FAILED` and never becomes current. `READY` is terminal. A retry may transition the same logical snapshot from `FAILED` back to `BUILDING` only while holding its PostgreSQL advisory lock, after clearing partial structural rows and while recording a new `index_jobs` attempt. A stale `BUILDING` snapshot must first become `FAILED` before retry.
 
-By default, retain the latest five `READY` snapshots plus snapshots explicitly pinned by active diff or PR analyses. Removing a snapshot also schedules removal of its retained source blobs, chunks, embedding indexes, and other snapshot-owned data.
+By default, retain the latest five `READY` snapshots plus the current snapshot and snapshots protected by unexpired leases. Pin types initially are `MANUAL`, `ACTIVE_DIFF`, and `ACTIVE_PR`; every lease expires, lasts at most 30 days, and may be renewed. Removing a snapshot removes its relational data and makes its source blobs eligible for reference-aware reconciliation only when no retained file record uses them.
 
-Embedding versions are not part of analysis snapshot identity. They belong to separate embedding indexes so re-embedding never requires structural reanalysis.
+The structural analyzer name and version are both part of analysis snapshot identity. Embedding provider, model, and version are not; they belong to separate embedding indexes so re-embedding never requires structural reanalysis.
 
 ## embedding_indexes
 
@@ -1392,7 +1394,7 @@ where possible.
 
 Then checkout the desired commit.
 
-After analysis, all retained source files are written to snapshot-scoped object-storage keys and verified by content hash. The temporary clone is deleted whether the job succeeds or fails. Retaining source is necessary for later Monaco viewing and citation validation; the clone itself is never the retained source of truth.
+After analysis, all retained source and materially influential repository configuration files are written as globally content-addressed immutable objects and verified by content hash. Snapshot-scoped `files` rows reference those objects, allowing identical bytes to be shared safely across snapshots and repositories. The temporary clone is deleted whether the job succeeds or fails. Retaining source is necessary for later Monaco viewing and citation validation; the clone itself is never the retained source of truth.
 
 You need Git history metadata, which is why a simple depth-1 clone isn't ideal for archaeology.
 
@@ -1532,9 +1534,10 @@ The durable snapshot lifecycle is separate from the progress phase:
 ```text
 BUILDING → READY
 BUILDING → FAILED
+FAILED → BUILDING
 ```
 
-A job writes only to a `BUILDING` snapshot. Readers query `repositories.current_snapshot_id`, which always points to a `READY` snapshot. Final validation, the transition to `READY`, and the current-snapshot pointer update occur atomically. A failure records `FAILED` without disturbing the previously published snapshot.
+A job writes only to a `BUILDING` snapshot. Readers query `repositories.current_snapshot_id`, which always points to a `READY` snapshot. Final validation, the transition to `READY`, and the current-snapshot pointer update occur atomically. A failure records `FAILED` without disturbing the previously published snapshot. `FAILED → BUILDING` is a controlled retry of the same repository, commit SHA, analyzer name, and analyzer version under its advisory lock; `index_jobs` retains attempt history. A `READY` snapshot is never reset or structurally mutated.
 
 ---
 
@@ -2587,6 +2590,8 @@ repository_id
 +
 commit_sha
 +
+analyzer_name
++
 analyzer_version
 ```
 
@@ -2771,7 +2776,7 @@ Do not build an editor.
 
 Read-only is sufficient.
 
-The viewer obtains retained source through an authenticated repository API. The API verifies user → installation → repository authorization, reads the snapshot-scoped object from MinIO/S3, validates its content hash, and returns only the authorized file/range. Object-storage credentials are never exposed to the browser.
+The viewer obtains retained source through an authenticated repository API. The API verifies user → installation → repository authorization, resolves the snapshot-scoped file record to its globally content-addressed MinIO/S3 object, validates its content hash, and returns only the authorized file/range. Object-storage credentials are never exposed to the browser.
 
 ---
 
@@ -2864,7 +2869,7 @@ temporary isolated directory
 
 Repository is deleted afterward.
 
-Before deletion, retained source blobs are stored under snapshot-scoped object keys in MinIO locally or S3 in production and verified against `files.content_hash`. Temporary clone cleanup must run on both success and failure.
+Before deletion, retained source blobs are stored under globally content-addressed keys in MinIO locally or S3 in production and verified against `files.content_hash`. Snapshot-scoped file rows carry membership and authorization. Temporary clone cleanup must run on both success and failure.
 
 Never log:
 
@@ -3408,7 +3413,7 @@ Harden the in-memory code graph before persistence: add project-reference and ov
 
 ### Milestone 4 — PostgreSQL snapshots and persistence
 
-Persist immutable analysis snapshots, files, entities, edges, chunks, history metadata, jobs, and authorization records. Add BUILDING/READY/FAILED publication, idempotency, `current_snapshot_id`, retention, MinIO source blobs, and atomic publication.
+Persist immutable analysis snapshots, files, entities, edges, diagnostics, unresolved relationships, local index jobs, and expiring snapshot pins. Add BUILDING/READY/FAILED publication and controlled failed-attempt recovery, idempotency, `current_snapshot_id`, retention, globally content-addressed MinIO source blobs, and atomic publication. Defer chunks, embeddings, history, GitHub authorization, and other unused future tables until their implementing milestones.
 
 ### Milestone 5 — Thin explorer
 

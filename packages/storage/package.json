@@ -1,0 +1,15 @@
+{
+  "name": "@codeatlas/storage",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "types": "./src/index.ts",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run packages/storage/test"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "3.1126.0"
+  }
+}

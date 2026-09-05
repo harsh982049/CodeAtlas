@@ -5,12 +5,12 @@ import {
   createCommitSha,
   createEdgeConfidence,
   createImpactCertainty,
-  createAnalyzerVersion,
   createEmbeddingModelId,
   createEmbeddingProviderId,
   createEmbeddingVersion,
   createRepositoryIdentifier,
   createRiskSeverity,
+  createStructuralAnalyzerIdentity,
   normalizeRelativePath,
   toRepositoryRelativePath,
 } from "../src/index.js";
@@ -40,7 +40,7 @@ describe("shared value contracts", () => {
     const snapshot = {
       repositoryId: createRepositoryIdentifier("github:acme/payments"),
       commitSha: createCommitSha("b".repeat(40)),
-      analyzerVersion: createAnalyzerVersion("js-ts-v1"),
+      analyzer: createStructuralAnalyzerIdentity("typescript-javascript", "js-ts-v1"),
     };
     const embeddingIndex = {
       snapshot,

@@ -15,7 +15,11 @@
     "benchmark:analyzer": "pnpm --filter @codeatlas/benchmark benchmark:analyzer",
     "benchmark:realworld:materialize": "pnpm --filter @codeatlas/benchmark benchmark:realworld:materialize",
     "benchmark:realworld": "pnpm --filter @codeatlas/benchmark benchmark:realworld",
-    "codeatlas": "tsx packages/analyzer/src/cli.ts"
+    "benchmark:persistence": "pnpm --filter @codeatlas/benchmark benchmark:persistence",
+    "db:generate": "pnpm --filter @codeatlas/db db:generate",
+    "db:migrate": "pnpm --filter @codeatlas/db db:migrate",
+    "test:persistence": "vitest run --config vitest.persistence.config.ts",
+    "codeatlas": "tsx packages/indexer/src/cli.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

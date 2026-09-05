@@ -8,6 +8,7 @@ import { normalizeRelativePath } from "@codeatlas/shared";
 import type { AnalysisLimits } from "./analyzer-input.js";
 import type { AnalyzerDiagnostic } from "./analyzer-diagnostic.js";
 import { AnalysisLimitError } from "./analysis-error.js";
+import type { SourceArtifactFormat, SourceArtifactRole } from "./source-artifact.js";
 
 const ignoredDirectories = new Set([
   ".git", ".hg", ".svn", ".next", ".turbo", "build", "coverage", "dist",
@@ -20,6 +21,9 @@ const projectNames = new Set(["package.json", "pnpm-workspace.yaml", "tsconfig.j
 export interface RepositoryFile {
   readonly absolutePath: string;
   readonly relativePath: NormalizedRelativePath;
+  readonly role: SourceArtifactRole;
+  readonly format: SourceArtifactFormat;
+  readonly bytes: Buffer;
   readonly text: string;
   readonly contentHash: string;
 }
@@ -55,8 +59,20 @@ function isProjectFile(relative: string): boolean {
   return projectNames.has(name) || /^tsconfig\..+\.json$/u.test(name) || /^jsconfig\..+\.json$/u.test(name);
 }
 
-function hash(text: string): string {
-  return createHash("sha256").update(text, "utf8").digest("hex");
+function hash(bytes: Uint8Array): string {
+  return createHash("sha256").update(bytes).digest("hex");
+}
+
+function sourceFormat(relativePath: string): SourceArtifactFormat {
+  const lower = relativePath.toLowerCase();
+  if (lower.endsWith(".tsx")) return "TYPESCRIPT_JSX";
+  if (lower.endsWith(".jsx")) return "JAVASCRIPT_JSX";
+  if (/(?:\.d)?\.(?:ts|mts|cts)$/u.test(lower)) return "TYPESCRIPT";
+  return "JAVASCRIPT";
+}
+
+function projectFormat(relativePath: string): SourceArtifactFormat {
+  return relativePath.toLowerCase().endsWith(".yaml") ? "YAML" : "JSON";
 }
 
 function skipReason(relativePath: string, text: string): { code: string; message: string } | null {
@@ -145,7 +161,8 @@ export async function scanRepository(
         diagnostics.push(locationless("FILE_TOO_LARGE", `Skipped ${relativeText}; file exceeds ${limits.maxFileBytes} bytes`));
         continue;
       }
-      const text = await readFile(absolutePath, "utf8");
+      const bytes = await readFile(absolutePath);
+      const text = bytes.toString("utf8");
       if (sourceCandidate) {
         const reason = skipReason(relativeText, text);
         if (reason !== null) {
@@ -157,8 +174,11 @@ export async function scanRepository(
       const file: RepositoryFile = {
         absolutePath,
         relativePath: normalizeRelativePath(relativeText),
+        role: sourceCandidate ? "SOURCE" : "PROJECT_CONFIGURATION",
+        format: sourceCandidate ? sourceFormat(relativeText) : projectFormat(relativeText),
+        bytes,
         text,
-        contentHash: hash(text),
+        contentHash: hash(bytes),
       };
       if (sourceCandidate) sourceFiles.push(file);
       else projectFiles.push(file);

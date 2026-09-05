@@ -2,7 +2,7 @@
 
 This document is the architecture entry point required by `AGENTS.md`. The complete product and engineering contract is in [`CODEATLAS_V1_SPEC.md`](./CODEATLAS_V1_SPEC.md); accepted decisions and their consequences are in [`adr/`](./adr/).
 
-The executable graph boundaries are documented in [`CODE_GRAPH_CONTRACT.md`](./CODE_GRAPH_CONTRACT.md), the Milestone 3 compiler frontend in [`ANALYZER.md`](./ANALYZER.md), and the synthetic plus pinned-repository evaluation method in [`BENCHMARKS.md`](./BENCHMARKS.md).
+The executable graph boundaries are documented in [`CODE_GRAPH_CONTRACT.md`](./CODE_GRAPH_CONTRACT.md), the compiler frontend in [`ANALYZER.md`](./ANALYZER.md), immutable snapshot publication in [`PERSISTENCE.md`](./PERSISTENCE.md), and the synthetic plus pinned-repository evaluation method in [`BENCHMARKS.md`](./BENCHMARKS.md).
 
 ## System shape
 
@@ -12,12 +12,13 @@ Browser
   → Fastify API
       → PostgreSQL metadata/index/relationships
       → MinIO or S3 retained source blobs
-      → Redis/BullMQ indexing jobs
-          → isolated worker clone
-          → TypeScript Compiler API + Git
+      → indexing service
+          → TypeScript Compiler API + read-only Git
 ```
 
-The worker never executes repository code or installs dependencies. It publishes immutable analysis snapshots atomically. Query, exploration, history, and impact features consume only `READY` snapshots.
+Milestone 4 runs the indexer locally and in-process. Redis/BullMQ, remote worker isolation, temporary GitHub clones, and their operational controls remain the target production shape for later integration milestones; they are not current runtime dependencies.
+
+The worker never executes repository code or installs dependencies. Structural snapshot identity is repository + exact commit SHA + analyzer name + analyzer version. It publishes immutable analysis snapshots atomically. Query, exploration, history, and impact features consume only `READY` snapshots.
 
 ## Intelligence layers
 
@@ -34,5 +35,7 @@ The worker never executes repository code or installs dependencies. It publishes
 - [ADR 004: Retain source in object storage and require consent for external AI](./adr/004-source-retention-external-ai-privacy.md)
 - [ADR 005: Separate confidence concepts and use categorical V1 impact risk](./adr/005-confidence-impact-semantics.md)
 - [ADR 006: Use bounded fingerprint-aware incremental invalidation](./adr/006-incremental-invalidation.md)
+- [ADR 007: Publish snapshots atomically under database-owned index attempts](./adr/007-atomic-snapshot-publication-and-index-ownership.md)
+- [ADR 008: Use globally content-addressed retained source blobs](./adr/008-content-addressed-source-storage-and-reconciliation.md)
 
 If this overview conflicts with the specification or an accepted ADR, the accepted ADR governs its decision and the specification must be updated to match it.

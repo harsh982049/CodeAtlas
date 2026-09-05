@@ -289,7 +289,18 @@ class ExtractionContext {
       edgesCreated: this.graph.getEdges().length,
       elapsedMs: Math.max(0, Math.round(elapsedMs)),
     };
-    return { graph: this.graph, stats, diagnostics: this.diagnostics, unresolvedRelationships: this.unresolvedRelationships, telemetry };
+    const sourceArtifacts = [...this.#repository.sourceFiles, ...this.#repository.projectFiles]
+      .sort((left, right) => left.relativePath.localeCompare(right.relativePath))
+      .map((file) => ({
+        path: file.relativePath,
+        role: file.role,
+        format: file.format,
+        bytes: file.bytes,
+        contentHash: file.contentHash,
+        byteCount: file.bytes.byteLength,
+        lineCount: file.text.length === 0 ? 0 : file.text.split(/\r?\n/u).length,
+      }));
+    return { graph: this.graph, stats, diagnostics: this.diagnostics, unresolvedRelationships: this.unresolvedRelationships, sourceArtifacts, telemetry };
   }
 
   #recordMalformed(context: SourceContext, diagnostics: readonly ts.Diagnostic[]): void {
@@ -1000,6 +1011,9 @@ export class TypeScriptJavaScriptAnalyzer implements LanguageAnalyzer {
 
   async analyze(input: AnalyzerInput): Promise<AnalyzerResult> {
     assertAnalyzerInput(input);
+    if (input.snapshot !== null && (input.snapshot.analyzer.name !== this.name || input.snapshot.analyzer.version !== this.version)) {
+      throw new Error("Snapshot structural analyzer identity does not match the selected analyzer");
+    }
     const started = performance.now();
     const telemetry = new AnalysisTelemetryRecorder();
     const deadline = new AnalysisDeadline(input.limits.timeoutMilliseconds);

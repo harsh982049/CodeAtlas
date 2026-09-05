@@ -13,11 +13,15 @@
     "benchmark:contracts": "vitest run benchmark/test",
     "benchmark:analyzer": "tsx src/analyzer-cli.ts",
     "benchmark:realworld:materialize": "tsx src/realworld-materialize-cli.ts",
-    "benchmark:realworld": "tsx src/realworld-cli.ts"
+    "benchmark:realworld": "tsx src/realworld-cli.ts",
+    "benchmark:persistence": "tsx src/persistence-cli.ts"
   },
   "dependencies": {
     "@codeatlas/analyzer": "workspace:*",
     "@codeatlas/codegraph": "workspace:*",
-    "@codeatlas/shared": "workspace:*"
+    "@codeatlas/db": "workspace:*",
+    "@codeatlas/shared": "workspace:*",
+    "@codeatlas/indexer": "workspace:*",
+    "@codeatlas/storage": "workspace:*"
   }
 }

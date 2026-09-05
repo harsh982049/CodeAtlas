@@ -6,5 +6,6 @@ export default defineConfig({
   test: {
     environment: "node",
     include: ["packages/*/test/**/*.test.ts", "benchmark/test/**/*.test.ts"],
+    exclude: ["packages/indexer/test/integration/**/*.integration.test.ts"],
   },
 });

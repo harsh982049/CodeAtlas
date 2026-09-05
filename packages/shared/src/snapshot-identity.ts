@@ -7,10 +7,15 @@ export type EmbeddingProviderId = Brand<string, "EmbeddingProviderId">;
 export type EmbeddingModelId = Brand<string, "EmbeddingModelId">;
 export type EmbeddingVersion = Brand<string, "EmbeddingVersion">;
 
+export interface StructuralAnalyzerIdentity {
+  readonly name: string;
+  readonly version: AnalyzerVersion;
+}
+
 export interface AnalysisSnapshotIdentity {
   readonly repositoryId: RepositoryIdentifier;
   readonly commitSha: CommitSha;
-  readonly analyzerVersion: AnalyzerVersion;
+  readonly analyzer: StructuralAnalyzerIdentity;
 }
 
 export interface EmbeddingIndexIdentity {
@@ -44,6 +49,16 @@ export function createAnalyzerVersion(value: string): AnalyzerVersion {
   return nonEmpty<"AnalyzerVersion">(value, "Analyzer version");
 }
 
+export function createStructuralAnalyzerIdentity(
+  name: string,
+  version: string,
+): StructuralAnalyzerIdentity {
+  return {
+    name: nonEmpty<"StructuralAnalyzerName">(name, "Analyzer name"),
+    version: createAnalyzerVersion(version),
+  };
+}
+
 export function createEmbeddingProviderId(value: string): EmbeddingProviderId {
   return nonEmpty<"EmbeddingProviderId">(value, "Embedding provider");
 }
@@ -55,4 +70,3 @@ export function createEmbeddingModelId(value: string): EmbeddingModelId {
 export function createEmbeddingVersion(value: string): EmbeddingVersion {
   return nonEmpty<"EmbeddingVersion">(value, "Embedding version");
 }
-
